@@ -7,10 +7,12 @@ class Solution {
 
     HashMap<Integer, Integer> dict = new HashMap<>();
     for(int i = 0; i < arr_len; i++) dict.put(nums[i],i); //key, value ~ data,index
-    int y;
-    for(int i = 0; i<arr_len - 1; i++){
-        y = target - nums[i];
-        if(dict.containsKey(y) && dict.get(y) != i) return new int[]{dict.get(y),i}; 
+    
+    for(int i = 0; i < arr_len; i++){
+        int secondNum = target - nums[i];
+        if(dict.containsKey(secondNum) && dict.get(secondNum) != i){ //checks secondNums index & curr index
+            return new int[]{i, dict.get(secondNum)};
+        }
     }
     return null;
     }
