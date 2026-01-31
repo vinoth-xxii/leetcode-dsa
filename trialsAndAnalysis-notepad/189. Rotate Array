@@ -1,0 +1,57 @@
+// The below is the second attempt for me to grasp the idea, 1st attempt is in the old device
+import java.util.Arrays;
+
+class Main{
+
+	public static void rotate(int[] nums, int k){
+		int[] temp = new int[nums.length];
+		int virtual_index = nums.length - 1 - k;
+		for(int i = 0; i < nums.length; i++){
+			if(i <= virtual_index){
+				temp[i + k] = nums[i]; 
+			}
+			else{
+				temp[i%(virtual_index+1)] = nums[i];
+			}
+		}
+		System.out.println(Arrays.toString(temp));
+	}
+	
+	
+	public static void main(String[] args){
+		int[] arr = {1,2,3,4,5,6,7};
+		int k = 3;
+		rotate(arr, k);
+	}
+}
+
+
+//third attempt (this time to get optimised solution) - but it worked only for k=1 value not k-2,3 etc..
+class Solution {
+    public void rotate(int[] nums, int k) {
+        int temp = 0; 
+        int temp1 = 0;      //o(1) space
+        for (int i = 0; i < nums.length; i++) { //o(n) time
+            int newPos = (i + k) % nums.length;
+            temp1 = temp;
+            temp = nums[newPos]; //backup of overriding element
+            if(i == 0)  nums[newPos] = nums[i];
+            else nums[newPos] = temp1;
+        }
+    }
+}
+
+
+//forth attempt (time out exception)(Simple and correct 100% working code)
+class Solution {
+    public void rotate(int[] nums, int k) {
+        int temp; //O(1)
+        for(int i = 0; i < k; i++){     //O(k)
+            temp = nums[nums.length-1];
+            for(int j = nums.length - 1; j > 0; j--){   //O(n)
+                nums[j] = nums[j-1];  //O(1)
+            }
+            nums[0] = temp;   //O(1)
+        }
+    }
+}

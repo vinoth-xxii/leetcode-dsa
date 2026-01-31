@@ -1,0 +1,83 @@
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        /* i planed to use left and right pointer;
+           and i will assign a counter to right pointer;
+           if counter has reached the limit, i ll override the value with right + 1
+           but! what if it has 4 once, replace just 3rd once won't do
+           Maybe we can append the count till the new val and we replace it new once
+           by iterating back or something.
+        
+           we could achieve this by decremeting right uptil 1 or something(>left)
+        */
+
+        //and that right'll be the new left
+        int left, right, count;
+        left = 0;
+        /* striks here about the edge cases what if the last past has continuous
+        duplicates? in this case (left < len) won't do the trick;
+        and right pointer'll throw indexOutOfBound
+        */
+
+        /*I thought right could be disposable/reinitialised and not its not
+        feasiable to think that; i believe we can overcome by returning
+        when right it crossed the length of input array*/
+
+        right = left + 1;
+        while (left < nums.length) {
+            count = 0;
+            while (nums[right] == nums[left]) {
+                if (right >= nums.length - 1)
+                    return nums.length - 1;
+                right++;
+                count++;
+            }
+            //once the new value has encountered
+            while (count - 1 > 0) {
+                nums[right - 1] = nums[right--];
+                count--;
+            }
+
+            /* Post Run: In test Case [0,0,1,1,1,1,2,3,3]
+               My Output:             [0,0,1,1,2,2,3,3]
+               Expected:              [0,0,1,1,2,3,3]
+
+               overriding values with new discoverted brings new
+               challenge
+            */
+
+            left = right;
+            right = left + 1;
+
+        }
+        return left;
+
+    }
+}
+
+// 90% working solution (watched youtube for idea though) : Since i am copyPasting the element and the code has a bug to contol atmost 2 occurances
+// The code assumes its a valid once.
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int left, right;
+        left = 2;
+        right = 2;
+        while (right < nums.length) {
+            if (nums[right] != nums[right - 2]) {
+                right++;
+                left++;
+            }
+            //simple else didn't work, as the above condition
+            //wrongly covers it, ig else'll work along with while inside
+            else {
+                while (right < nums.length - 1 && nums[right] == nums[left]) { //put the bound condion from; java checkes from left to right
+                    right++;
+                }
+                nums[left] = nums[right];
+                left++;
+                right = left; //restarting the cycle
+            }
+        }
+        return left - 1; //elements to index (need revision)
+    }
+}
+
