@@ -20,8 +20,13 @@ class Solution {
             return;
         }
         int mid = left + (right - left) / 2;
-        setMinMax(left, mid);
-        setMinMax(mid + 1, right);
+        if (arr[mid] == target) { //might be optimal compared to previous once
+            setMinMax(left, mid);
+            setMinMax(mid + 1, right);
+        }
+        else if(arr[mid] < target)  setMinMax(mid + 1, right);
+        else  setMinMax(left, mid);
+
     }
 
     public int[] searchRange(int[] nums, int target) {
