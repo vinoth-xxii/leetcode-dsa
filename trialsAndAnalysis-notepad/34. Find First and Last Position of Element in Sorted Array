@@ -1,0 +1,69 @@
+class Solution {
+    int min = -1;
+    int max = -1;
+    int target;
+    int arr[];
+
+    public void setMinMax(int left, int right){
+        if(left==right){
+            if(arr[left] == target){
+                if(left < min) min = left;
+                if(right > max) max = right;
+                return;
+            }
+            return;
+        }
+        int mid = (right-left)/ 2 - left;
+        setMinMax(left, mid);
+        setMinMax(mid+1,right);
+    }
+
+    public int[] searchRange(int[] nums, int target) {
+        this.target = target;
+        this.arr = nums;
+        int left = 0;
+        int right = nums.length - 1;
+        setMinMax(left, right);
+        return new int[] { min, max };
+    }
+}
+
+throws runTime error in leetCode:
+java.lang.StackOverflowError
+  at line 17, Solution.setMinMax
+  
+  
+// Corrected Code
+class Solution {
+    int min = Integer.MAX_VALUE;
+    int max = -1;
+    int target;
+    int[] arr;
+
+    public void setMinMax(int left, int right) {
+        if (left > right) return;
+
+        if (left == right) {
+            if (arr[left] == target) {
+                min = Math.min(min, left);
+                max = Math.max(max, left);
+            }
+            return;
+        }
+
+        int mid = left + (right - left) / 2;
+
+        setMinMax(left, mid);
+        setMinMax(mid + 1, right);
+    }
+
+    public int[] searchRange(int[] nums, int target) {
+        this.target = target;
+        this.arr = nums;
+
+        setMinMax(0, nums.length - 1);
+
+        if (min == Integer.MAX_VALUE) return new int[]{-1, -1};
+        return new int[]{min, max};
+    }
+}

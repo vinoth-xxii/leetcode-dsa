@@ -1,0 +1,29 @@
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+        /*Since they have give O(log n) runtime,
+          I'll skip O(n) approach
+        */
+        int left, right;
+        left = 0; right = nums.length - 1;
+        //to find mid pointer of a any length
+        //how many elements in the given interval? or
+        //should i think of something else? like the indeces of 
+        //0th index and len - 1 index
+        //i will go with the latter
+        int middle = ((right - left) / 2) + 1; //this +1 from my memory, has to have a meaning in the below condtion
+    while(left <= right){
+        if(nums[middle] == target)
+        {
+            return middle; //i am wondering, after this return statement, will it say the function doesn't have any return statement. 
+//Also i am starting to if the value isn't in the array, then i won't return anything, could this might be any reason why the function is expacring the return outside the while?
+        }
+        //From the above line, i m starting to wonder this +1 has something to do with floor division. or is it for the below line? hm...
+        else if (tagert >= nums[middle]){
+            left = middle + 1;
+        }
+        else {
+            right = middle - -1;
+        }
+    }
+    }
+}

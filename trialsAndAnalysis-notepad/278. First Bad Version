@@ -1,0 +1,44 @@
+/* The isBadVersion API is defined in the parent class VersionControl.
+      boolean isBadVersion(int version); */
+
+public class Solution extends VersionControl {
+    public int firstBadVersion(int n) {
+        /*This feels similar to binary search, and it make me think
+        instantly to create an array values containing from 1 to n.
+        But then i thougth, this's is worse as it will lead O(n) extra
+        space and O(n) extra time to create an arry, sure the calls performance
+        won't get affected.
+        */
+        int left,right,mid;
+        left = 1; right = n;
+        while(left<=right){
+            mid = (right - left)/2 + left;
+            if(!isBadVersion(mid)) return
+        }
+    }
+}
+
+
+/* The isBadVersion API is defined in the parent class VersionControl.
+      boolean isBadVersion(int version); */
+
+public class Solution extends VersionControl {
+    public int firstBadVersion(int n) {
+        //question redo, in the morning, lol
+        /* if you pick a number in the function of it, return false
+        then upto it, no bad version, so i have to keep searching, by alwways
+        moving formard*/
+
+        /*this can be solved using similar approach to binary searh
+        with O(log n) time complexity - halfing search space each iteration*/
+
+        //it has to have atleast one version - edge case
+        //is this above even valid IRL?
+
+       int temp = 1;
+       while(temp <= n){
+        temp = (n - temp)/2 + temp;
+        if(isBadVersion(temp)) //ig i have to use
+       }
+    }
+}

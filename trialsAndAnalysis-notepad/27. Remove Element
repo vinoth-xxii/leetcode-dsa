@@ -1,0 +1,29 @@
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        int left,right;
+        left = 0; right = nums.length - 1; //num.len -> num.len - 1
+        while(left < right){
+            if(nums[left] != val){
+                left++;
+            }
+            else{
+                while(nums[right] == val){ //throwed ndexOutOfBound
+                    right--;
+                }
+                int temp = nums[right];
+                nums[right--] = nums[left];
+                nums[left++] = temp;
+                // count++;
+            }
+        }
+        
+        if(nums.length <= 1){ //checks for certain edge cases
+            if(nums.length == 0) return 0;
+            else if(nums[0] == val) return val;
+            else return 1;
+        }
+        else{
+            return left+1;
+        }
+    }
+}
