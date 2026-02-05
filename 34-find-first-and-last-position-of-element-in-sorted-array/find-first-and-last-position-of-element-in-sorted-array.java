@@ -1,17 +1,37 @@
 class Solution {
-    public int[] searchRange(int[] nums, int target) {
-        //O(n) time approach
-        for(int i = 0; i < nums.length; i++){  //O(n) time
-            if(nums[i] == target){
-                List<Integer> list = new ArrayList<>(); //O(n) space
-                list.add(i++);
-                while(i < nums.length && nums[i] == target){ //O(n) time
-                    list.add(i++);
-                }
-                //they are just asking the first and last indeces
-                return new int[]{list.get(0), list.get(list.size()-1)}; //O(1)
+    // Just tried with divide and conquer approach - no time improvement
+    int min = Integer.MAX_VALUE;
+    int max = -1;
+    int target;
+    int arr[];
+
+    public void setMinMax(int left, int right) {
+        if (left > right)
+            return;
+
+        if (left == right) {
+            if (arr[left] == target) {
+                if (left < min)
+                    min = left;
+                if (right > max)
+                    max = right;
+                return;
             }
+            return;
         }
-        return new int[]{-1,-1};
+        int mid = left + (right - left) / 2;
+        setMinMax(left, mid);
+        setMinMax(mid + 1, right);
+    }
+
+    public int[] searchRange(int[] nums, int target) {
+        this.target = target;
+        this.arr = nums;
+        int left = 0;
+        int right = nums.length - 1;
+        setMinMax(left, right);
+        if (min == Integer.MAX_VALUE)
+            return new int[] { -1, -1 };
+        return new int[] { min, max };
     }
 }
