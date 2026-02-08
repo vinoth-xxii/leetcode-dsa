@@ -1,0 +1,31 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        int min, max;
+        min = 0; max = 0;
+        for(int i = 0; i < prices.length; i++){ //O(n) time
+            if(prices[i] < prices[min]){
+                min = i;
+                max = i;
+            }
+            else if(prices[i] >= prices[max]) max = i;
+        }
+        if(max == min) return 0;
+        return prices[max] - prices[min];
+    }
+}
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int min, max;
+        min = 0; max = 0;
+        for(int i = 0; i < prices.length; i++){ //O(n) time
+            if(prices[i] < prices[min] && i != prices.length - 1){ //for last day
+                min = i;
+                max = i;
+            }
+            else if(prices[i] >= prices[max]) max = i;
+        }
+        if(max == min) return 0;
+        return prices[max] - prices[min];
+    }
+}
