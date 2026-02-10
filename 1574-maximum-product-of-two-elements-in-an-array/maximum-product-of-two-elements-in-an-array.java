@@ -1,18 +1,17 @@
 class Solution {
     public int maxProduct(int[] nums) {
-        //Aren't asking to give us optimised sol, so O(n^2) quadratic time
-        int max = Integer.MIN_VALUE;
-        int temp;
-
-        if(nums.length == 2){
-            return (nums[0]-1)*(nums[1]-1);
-        }
-        for(int i = 0; i < nums.length - 1; i++){
-            for(int j = i+1; j < nums.length; j++){
-                temp = (nums[i]-1)*(nums[j]-1);
-                max = Integer.max(max, temp);
+        //Trying to solve it using 2nd largest element - O(n) time
+        Integer first_max, second_max;
+        first_max = null; second_max = null;
+        for(Integer num : nums){
+            if(first_max == null || num > first_max){
+                second_max = first_max;
+                first_max = num;
+            }
+            else if(second_max == null || num > second_max){
+                second_max = num;
             }
         }
-        return max;
+        return (first_max-1)*(second_max-1);
     }
 }
