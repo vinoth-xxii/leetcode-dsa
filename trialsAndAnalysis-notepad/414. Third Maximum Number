@@ -1,0 +1,131 @@
+class Solution {
+    public int thirdMax(int[] nums) {
+        /*I was thinking whether to use multiple loops, then
+        i thought of using multiple varibles.*/
+        int first, second, third;
+        first = nums[0]; second = nums[0]; third = nums[0];
+        for(int num : nums){
+            if(num < first) { //warn
+                third = second;
+                second = first;
+                first = num;
+            }
+        }
+        return third;
+    }
+}
+
+class Solution {
+    public int thirdMax(int[] nums) {
+        /*I was thinking whether to use multiple loops, then
+        i thought of using multiple varibles.*/
+        int max, count;
+        count = 1;
+        max = nums[0];
+        for(int num : nums){
+            if(num < max && count <=3 ) { //warn again nums = [1,2]
+                                        //warn again for duplicate
+                max = num;
+                count++;
+            }
+        }
+        return max;
+    }
+}
+
+//it's just adds it to the list, where is sort logic?
+class Solution {
+    public int thirdMax(int[] nums) {
+        //i know one approach, it's O(n) time and space
+        Set<Integer> set = new HashSet<>();
+        ArrayList<Integer> list = new ArrayList<>();
+        int count = 0;
+        for(int num : nums){
+            if(!set.contains(num)){
+                list.add(num);
+                set.add(num);
+                count+=1;
+            }
+        }
+        if(count < 3) return list.get(0); //warn
+        return list.get(2);
+    }
+}
+
+//
+class Solution {
+    public int thirdMax(int[] nums) {
+        Integer first, second, third;
+        first = null; second = null; third = null;
+        for(int num : nums){
+            if(first == null){
+                first = num;
+                continue;
+            }
+            if(num > first){
+                third = second;
+                second = first;
+                first = num;
+                continue;
+            }
+            if(second == null){
+                second = num;
+                continue;
+            }
+            if(num > second){
+                third = second;
+                second = num;
+                continue;
+            }
+            if(third == null){
+                third = num;
+                continue;
+            }
+            if(num > third){
+                third = num;
+            }
+        }
+        if(third != null) return third;
+        return first;
+    }
+}
+
+// Working one
+class Solution {
+    public int thirdMax(int[] nums) {
+        Integer first, second, third;
+        first = null; second = null; third = null;
+        for(int num : nums){
+            if(first == null){
+                first = num;
+                continue;
+            }
+            if(num > first){
+                third = second;
+                second = first;
+                first = num;
+                continue;
+            }
+            if(second == null && first != num){
+                second = num;
+                continue;
+            }
+            if(second != null && num > second && first != num){
+                third = second;
+                second = num;
+                continue;
+            }
+            if(third == null && first != num && second != num){
+                third = num;
+                continue;
+            }
+            if(third != null && num > third && first != num && second != num){
+                third = num;
+            }
+        }
+        if(third != null) return third;
+        return first;
+    }
+}
+
+//
