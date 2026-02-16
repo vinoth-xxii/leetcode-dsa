@@ -1,0 +1,412 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        /*i can store the elements in hashmap
+        and check it against the val of visiting node*/
+
+        // time - 2O(n)
+        HashMap<Integer, Integer> hash = new HashMap()<>;
+        ListNode currentNode = head;
+        while(currentNode != null){
+            if(hash.containsKey(currentNode.val)){
+
+            }
+            else{
+                hash.add(currentNode.val);
+            }
+        }
+
+        ListNode tempNode = head;
+        while(tempNode.val == containley){
+            head = tempNode.next;
+        }
+        while(tempNode.next!=null){
+            if(tempNode.next.val == containkey){
+                tempNode.next = tempNode.next.next;
+            }
+            tempNode = tempNode.next;
+        }
+    }
+}
+
+
+------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        /* i can store the elements in hashmap
+           and check it against the val of visiting node */
+
+        // time - 2O(n)
+        HashMap<Integer, Integer> hash = new HashMap<>();
+        ListNode currentNode = head;
+
+        while (currentNode != null) {
+            if (hash.containsKey(currentNode.val)) {
+                // logic intentionally left empty
+            } else {
+                hash.put(currentNode.val, 1);
+            }
+            currentNode = currentNode.next;
+        }
+
+        ListNode tempNode = head;
+
+        while (tempNode != null && tempNode.val == containley) {
+            head = tempNode.next;
+            tempNode = tempNode.next;
+        }
+
+        while (tempNode != null && tempNode.next != null) {
+            if (tempNode.next.val == containkey) {
+                tempNode.next = tempNode.next.next;
+            }
+            tempNode = tempNode.next;
+        }
+
+        return head;
+    }
+}
+
+
+------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        /* i can store the elements in hashmap
+           and check it against the val of visiting node */
+
+        // space - O(n)
+        HashMap<Integer, Integer> hash = new HashMap<>();
+        ListNode currentNode = head;
+
+        // time - 2 * O(n) = O(n)
+        while (currentNode != null) {
+            if (hash.containsKey(currentNode.val)) {
+                hash.put(currentNode.val, hash.get(currentNode.val) + 1);
+            } else {
+                hash.put(currentNode.val, 1);
+            }
+            currentNode = currentNode.next;
+        }
+
+        ListNode tempNode = head;
+
+        while (tempNode != null && hash.get(tempNode.val) > 1) {
+            head = tempNode.next;
+            tempNode = tempNode.next;
+        }
+
+        while (tempNode != null && tempNode.next != null) {
+            if (hash.get(tempNode.next.val) > 1) {
+                tempNode.next = tempNode.next.next;
+            } else {
+                tempNode = tempNode.next;
+            }
+        }
+
+        return head;
+    }
+}
+
+------------
+
+public ListNode returnUnique(ListNode Node, int value){
+    ListNode tempNode = Node.next;
+    while(temp != null){
+        if(tempNode.val != value){
+            tempNode = tempNode.next;
+        }
+        else{
+            returnUnique()
+        }
+    }
+ }
+
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        
+    }
+}
+
+------------ wrong
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+//we could use stack to do it, we could also by creating new linkedList
+//but we must 1st try with two pointer approah
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null)
+            return null;
+        ListNode currentNode = head;
+        while (currentNode.next != null) {
+            ListNode tempNode = currentNode;
+            while (tempNode.next != null && tempNode.val == tempNode.next.val) {
+                tempNode = tempNode.next;
+            }
+            if (tempNode != currentNode) {
+                currentNode.val = tempNode.next.val;
+            } else {
+                currentNode.val = tempNode.val;
+            }
+            currentNode = currentNode.next;
+
+        }
+        return head;
+    }
+}
+
+
+----------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+ /*just popped in my be head while looking at the picture
+   we kn we have to use two pointer, how we use it is the challenge
+   plus we could use swap logic until we get unique, plus i remember
+   passing node.next in binary tree
+ */
+class Solution {
+    public ListNode getUnique(ListNode node){
+        if(node == null) return node;
+        ListNode temp = node;
+        if(temp.val == temp.next.val){ //isDuplicate
+            int dupVal = temp.val;
+            while(temp.val == dupVal){
+                temp = temp.next;
+            }
+            node.next = getUnique(temp);
+        }
+        node.next = getUnique(node.next);
+        return node;
+    }
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null) return head;
+        ListNode modHead = getUnique(head);
+        return modHead;
+    }
+}
+
+-------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+/*just popped in my be head while looking at the picture
+  we kn we have to use two pointer, how we use it is the challenge
+  plus we could use swap logic until we get unique, plus i remember
+  passing node.next in binary tree
+*/
+class Solution {
+    public ListNode getNext(ListNode node) {
+        if (node == null) {
+            return node;
+        }
+        ListNode temp = node;
+        if (temp.next != null && temp.val == temp.next.val) { //isDuplicate
+            int dupVal = temp.val;
+            while (temp.val == dupVal) {
+                temp = temp.next;
+            }
+            node.next = getNext(temp);
+        }
+
+        node.next = getNext(node.next);
+        return node;
+    }
+
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null)
+            return head;
+        ListNode modHead = getNext(head);
+        return modHead;
+    }
+}
+
+
+-------- passed two test cases
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+/*just popped in my be head while looking at the picture
+  we kn we have to use two pointer, how we use it is the challenge
+  plus we could use swap logic until we get unique, plus i remember
+  passing node.next in binary tree
+*/
+class Solution {
+    public ListNode getNext(ListNode node) {
+        if (node == null) {
+            return node;
+        }
+        ListNode temp = node;
+        if (temp.next != null && temp.val == temp.next.val) { //isDuplicate
+            int dupVal = temp.val;
+            while (temp.val == dupVal) {
+                temp = temp.next;
+            }
+            node = getNext(temp);
+        } else {
+            node.next = getNext(node.next);
+        }
+        return node;
+
+    }
+
+    public ListNode deleteDuplicates(ListNode head) {
+        if (head == null)
+            return head;
+        ListNode modHead = getNext(head);
+        return modHead;
+    }
+}
+
+--------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+/*just popped in my be head while looking at the picture
+  we kn we have to use two pointer, how we use it is the challenge
+  plus we could use swap logic until we get unique, plus i remember
+  passing node.next in binary tree
+*/
+class Solution {
+    public ListNode getNext(ListNode node) {
+        if (node == null) {
+            return node;
+        }
+        ListNode temp = node;
+        if (temp.next != null && temp.val == temp.next.val) { //isDuplicate
+            int dupVal = temp.val;
+            while (temp.next != null && temp.val == dupVal) {
+                temp = temp.next;
+            }
+            node = getNext(temp);
+        } else {
+            node.next = getNext(node.next);
+        }
+        return node;
+
+    }
+
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode modHead = getNext(head);
+        return modHead;
+    }
+}
+
+
+-------- Final working code
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+/*just popped in my be head while looking at the picture
+  we kn we have to use two pointer, how we use it is the challenge
+  plus we could use swap logic until we get unique, plus i remember
+  passing node.next in binary tree
+*/
+class Solution {
+    public ListNode getNext(ListNode node) {
+        if (node == null) {
+            return node;
+        }
+        ListNode temp = node;
+        if (temp.next != null && temp.val == temp.next.val) { //isDuplicate
+            int dupVal = temp.val;
+            while (temp != null && temp.val == dupVal) {
+                temp = temp.next;
+            }
+            node = getNext(temp);
+        } else {
+            node.next = getNext(node.next);
+        }
+        return node;
+
+    }
+
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode modHead = getNext(head);
+        return modHead;
+    }
+}

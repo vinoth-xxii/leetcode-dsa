@@ -171,3 +171,23 @@ class Solution {
     }
 }
 
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        //we are not asked to get the days; just the max profit
+        int max = -1;
+        for (int i = 0; i < prices.length - 2; i++) {    // 152 / 212 testcases passed
+            for (int j = i + 1; j < prices.length - 1; j++) {
+                int diff = prices[j] - prices[i];
+                max = Math.max(max, diff);
+            }
+        }
+        if (max == -1)
+            return 0;
+        return max;
+    }
+
+}
+
+
+
