@@ -11,19 +11,22 @@
  */
 public class Solution {
     public boolean hasCycle(ListNode head) {
-        //creating set to store visited nodes
-        Set<ListNode> hashmap = new HashSet<>(); //O(n) space
-        ListNode currentNode = head;
-        while (currentNode != null) {    //O(n) time
-            if (!hashmap.contains(currentNode)) {  //O(1) time
-                hashmap.add(currentNode);
-                currentNode = currentNode.next;
-            } else {
-                return true; //list has a loop
+        if(head == null) return false;
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (fast != null) {
+            if (slow == fast) {
+                return true;
             }
+            if(slow == null){
+                return false;
+            }
+            if(fast.next == null){
+                return false;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
         }
-
         return false;
-
     }
 }
