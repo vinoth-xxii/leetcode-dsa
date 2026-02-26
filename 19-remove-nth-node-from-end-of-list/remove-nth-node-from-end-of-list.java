@@ -26,9 +26,9 @@ class Solution {
         ListNode right = node;
         int gap = n - 1;
         int count = 0;
-        while (right != null) {
+        while (right.next != null) {
             right = right.next;
-            if (count > gap) { //again making the same mistake here count >= gap
+            if (count >= gap) { //again making the same mistake here count >= gap
                 left = left.next;
             }
             count++;
