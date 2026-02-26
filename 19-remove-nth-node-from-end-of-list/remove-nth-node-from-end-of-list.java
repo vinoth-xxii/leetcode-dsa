@@ -10,17 +10,25 @@
  */
 class Solution {
 
-    /* Time - O(n)
-       Space - O(1) 
-    */
-    public ListNode findNode(ListNode head, int n) {
-        ListNode left, right;
-        left = head;
-        right = head;
-        int count = 1; // n - 1 step different
-        while (right != null) { 
+    ListNode target = null;
+
+    public ListNode removedList(ListNode node) {
+        if (node == null) {
+            return node;
+        }
+
+        node.next = removedList(node.next);
+        return (node == target) ? node.next : node;
+    }
+
+    public ListNode findtheNode(ListNode node, int n) {
+        ListNode left = node;
+        ListNode right = node;
+        int gap = n - 1;
+        int count = 0;
+        while (right != null) {
             right = right.next;
-            if (count > n && left != null) {
+            if (count > gap) { //again making the same mistake here count >= gap
                 left = left.next;
             }
             count++;
@@ -28,20 +36,17 @@ class Solution {
         return left;
     }
 
-    public ListNode moddedList(ListNode node, ListNode target) {
-        if (node == null) {
-            return node;
-        }
-        if (node == target) {
-            node = moddedList(node.next, target);
-        } else {
-            node.next = moddedList(node.next, target);
-        }
-        return node;
-    }
-
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode node = findNode(head, n);
-        return moddedList(head, node);
+        /* First I will find the node to be removed;
+        and i will pass that to remove function */
+
+        /*since the last postition is 1 and not 0;
+        in perception keep that the last is 0,1,2, etc;
+        by subtracting the n by 1 -> n - 1;
+        if n is 1 then it's 0; which has no gap b/w left and right; the gap is 0
+        if n is 2, then gap is 1; left should start after right move n - 1 step*/
+
+        target = findtheNode(head, n);
+        return removedList(head);
     }
 }
