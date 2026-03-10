@@ -1,0 +1,392 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        /* i will use two pointer, i will make the right point move till nth step,
+        and will make leftto move along
+        
+        For initial approach why should do with one pass? lol
+
+        Step 1: Just find out the node you want to delete
+        Step 2: Just implement the delete node impl
+         */
+
+        ListNode right,left;
+        int count = 1; //if the count is 1, i should remove the last
+        left = null;
+        right = head;
+
+        while(right != null){
+            right = right.next;
+            count++;
+            if(count > n){ //mod the left starting time
+                left = left.next;
+            }
+        }
+        left.next = left.next.next;
+    }
+}
+
+----------
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode findNode(ListNode head, int n){
+        ListNode left, right;
+        left = head; right = head;
+        int count = 0;
+        while(right != null){
+            count++;
+            right = right.next;
+            if(count >= n){
+                left = left.next;
+            }
+        }
+        return left;
+    }
+
+    public ListNode moddedList(ListNode node, ListNode target){
+        if(node == null){
+            return node;
+        }
+        if(node == target){
+            node = moddedList(node.next, target);
+        }
+        else{
+            node.next = moddedList(node.next, target);
+        }
+        return node;
+    }
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode node = findNode(head, n);
+        return moddedList(head, node);
+    }
+}
+
+--------------------
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode findNode(ListNode head, int n){
+        ListNode left, right;
+        left = head; right = head;
+        int count = 0;
+        while(right != null){
+            count++;
+            right = right.next;
+            if(count >= n && left.next != null){
+                left = left.next;
+            }
+        }
+        return left;
+    }
+
+    public ListNode moddedList(ListNode node, ListNode target){
+        if(node == null){
+            return node;
+        }
+        if(node == target){
+            node = moddedList(node.next, target);
+        }
+        else{
+            node.next = moddedList(node.next, target);
+        }
+        return node;
+    }
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode node = findNode(head, n);
+        return moddedList(head, node);
+    }
+}
+
+
+----------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+
+    public ListNode findNode(ListNode head, int n) {
+        ListNode left, right;
+        left = head;
+        right = head;
+        int count = 1; // n - 1 step different
+        while (right != null) {
+            right = right.next;
+            if (count >= n && left != null) {
+                left = left.next;
+            }
+            count++;
+        }
+        return left;
+    }
+
+    public ListNode moddedList(ListNode node, ListNode target) {
+        if (node == null) {
+            return node;
+        }
+        if (node == target) {
+            node = moddedList(node.next, target);
+        } else {
+            node.next = moddedList(node.next, target);
+        }
+        return node;
+    }
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode node = findNode(head, n);
+        return moddedList(head, node);
+    }
+}
+
+
+------------- (Below is working code but, it doesn't do it one pass)
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+
+    public ListNode findNode(ListNode head, int n) {
+        ListNode left, right;
+        left = head;
+        right = head;
+        int count = 1; // n - 1 step different
+        while (right != null) {
+            right = right.next;
+            if (count > n && left != null) {
+                left = left.next;
+            }
+            count++;
+        }
+        return left;
+    }
+
+    public ListNode moddedList(ListNode node, ListNode target) {
+        if (node == null) {
+            return node;
+        }
+        if (node == target) {
+            node = moddedList(node.next, target);
+        } else {
+            node.next = moddedList(node.next, target);
+        }
+        return node;
+    }
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode node = findNode(head, n);
+        return moddedList(head, node);
+    }
+}
+
+-------------- (didn't work)
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+
+    ListNode target = null;
+
+    public ListNode removedList(ListNode node) {
+        if (node == null) {
+            return node;
+        }
+
+        node.next = removedList(node.next);
+        return (node == target) ? node.next : node;
+    }
+
+    public ListNode findtheNode(ListNode node, int n) {
+        ListNode left = node;
+        ListNode right = node;
+        int gap = n - 1;
+        int count = 0;
+        while (right != null) {
+            right = right.next;
+            if (count >= gap) { //again making the same mistake here count >= gap
+                left = left.next;
+            }
+            count++;
+        }
+        return left;
+    }
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        /* First I will find the node to be removed;
+        and i will pass that to remove function */
+
+        /*since the last postition is 1 and not 0;
+        in perception keep that the last is 0,1,2, etc;
+        by subtracting the n by 1 -> n - 1;
+        if n is 1 then it's 0; which has no gap b/w left and right; the gap is 0
+        if n is 2, then gap is 1; left should start after right move n - 1 step*/
+
+        target = findtheNode(head, n);
+        return removedList(head);
+    }
+}
+
+-------------- (working solution)
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+
+    ListNode target = null;
+
+    public ListNode removedList(ListNode node) {
+        if (node == null) {
+            return node;
+        }
+
+        node.next = removedList(node.next);
+        return (node == target) ? node.next : node;
+    }
+
+    public ListNode findtheNode(ListNode node, int n) {
+        ListNode left = node;
+        ListNode right = node;
+        int gap = n - 1;
+        int count = 0;
+        while (right != null) {
+            right = right.next;
+            if (count > gap) { //again making the same mistake here count >= gap
+                left = left.next;
+            }
+            count++;
+        }
+        return left;
+    }
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        /* First I will find the node to be removed;
+        and i will pass that to remove function */
+
+        /*since the last postition is 1 and not 0;
+        in perception keep that the last is 0,1,2, etc;
+        by subtracting the n by 1 -> n - 1;
+        if n is 1 then it's 0; which has no gap b/w left and right; the gap is 0
+        if n is 2, then gap is 1; left should start after right move n - 1 step*/
+
+        target = findtheNode(head, n);
+        return removedList(head);
+    }
+}
+
+-------------- (Another working solution)
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+
+    ListNode target = null;
+
+    public ListNode removedList(ListNode node) {
+        if (node == null) {
+            return node;
+        }
+
+        node.next = removedList(node.next);
+        return (node == target) ? node.next : node;
+    }
+
+    public ListNode findtheNode(ListNode node, int n) {
+        ListNode left = node;
+        ListNode right = node;
+        int gap = n - 1;
+        int count = 0;
+        while (right.next != null) {
+            right = right.next;
+            if (count >= gap) { //again making the same mistake here count >= gap
+                left = left.next;
+            }
+            count++;
+        }
+        return left;
+    }
+
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        /* First I will find the node to be removed;
+        and i will pass that to remove function */
+
+        /*since the last postition is 1 and not 0;
+        in perception keep that the last is 0,1,2, etc;
+        by subtracting the n by 1 -> n - 1;
+        if n is 1 then it's 0; which has no gap b/w left and right; the gap is 0
+        if n is 2, then gap is 1; left should start after right move n - 1 step*/
+
+        target = findtheNode(head, n);
+        return removedList(head);
+    }
+}
+

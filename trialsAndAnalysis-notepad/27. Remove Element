@@ -27,3 +27,83 @@ class Solution {
         }
     }
 }
+
+//revist code changes - not working
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        int left = 0; int right = nums.length - 1;
+
+        while(left <= right){
+            if(nums[left] == val){
+                while(right > left && nums[right] == val) right--;
+                nums[left] = nums[right--];
+            }
+            left++;
+        }
+        return left;
+    }
+}
+
+//revision of revisit code
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left < right) {
+            if (nums[left] == val) {
+                while (right > left && nums[right] == val)
+                    right--; //Mind the index management
+                nums[left] = nums[right--];
+            }
+            left++;
+        }
+        if(left == right){
+            if(nums[left] == val) left--;
+            else left++;
+        }
+        return left;
+    }
+}
+
+//another revised code
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        int left = 0;
+        int right = nums.length - 1;
+        if(nums.length == 0){
+            return nums.length;
+        }
+        while(left < right){
+            while(nums[left] != val  && left < right){
+                left++;
+            }
+            while(right > left && nums[right] == val){
+                right--;
+            }
+            nums[left++] = nums[right--];
+        }
+    return left + 1;
+    }
+}
+
+//another revision code
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        int left = 0;
+        int right = nums.length - 1;
+        if (nums.length == 0) {
+            return nums.length;
+        }
+        while (left < right) {
+            while (nums[left] != val && left < right) {
+                left++;
+            }
+            while (right > left && nums[right] == val) {
+                right--;
+            }
+            nums[left++] = nums[right--];
+        }
+        return left;
+    }
+}

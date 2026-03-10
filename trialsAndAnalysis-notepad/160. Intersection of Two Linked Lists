@@ -1,0 +1,238 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        /*Approach 1 : hashSet
+          Approach 2 : two pointer - Quadratic time*/
+        if (headA == null || headB == null) {
+            return null;
+        }
+        ListNode pt1 = headA;
+        ListNode pt2 = headB;
+        while (pt1 != null) {
+            while (pt2 != null) {
+                if (pt1.val == pt2.val) {
+                    return pt1;
+                }
+                pt2 = pt2.next;
+            }
+            pt1 = pt1.next;
+        }
+        return null;
+    }
+}
+
+----------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        /*Approach 1 : hashSet
+          Approach 2 : two pointer - Quadratic time*/
+        if (headA == null || headB == null) {
+            return null;
+        }
+        ListNode pt1 = headA;
+		>>>>>>>>
+        while (pt1 != null) {
+            ListNode pt2 = headB; <<<<<<<<<<<
+            while (pt2 != null) {
+                if (pt1.val == pt2.val) {
+                    return pt1;
+                }
+                pt2 = pt2.next;
+            }
+            pt1 = pt1.next;
+        }
+        return null;
+    }
+}
+
+-----------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+ 
+//Note : The values are repeated, don't check with values
+
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        /*Approach 1 : hashSet
+          Approach 2 : two pointer - Quadratic time*/
+        if (headA == null || headB == null) {
+            return null;
+        }
+        ListNode pt1 = headA;
+        while (pt1 != null) {
+            ListNode pt2 = headB;
+            while (pt2 != null) {
+                if (pt1 == pt2) {
+                    return pt1;
+                }
+                pt2 = pt2.next;
+            }
+            pt1 = pt1.next;
+        }
+        return null;
+    }
+}
+
+
+-----------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode aLast = headA;
+        ListNode bLast = headB;
+        int aCount = 0;
+        int bCount = 0;
+
+        while (aLast != null) {
+            aCount++;
+            aLast = aLast.next;
+        }
+        while (bLast != null) {
+            bCount++;
+            bLast = bLast.next;
+        }
+
+        if (aLast != bLast) {
+            return null;
+        }
+
+        if (aCount < bCount) {
+            for (int i = 0; i < bCount - aCount; i++) {
+                while (bLast != null) {
+                    bLast = bLast.next;
+
+                }
+            }
+            return bLast;
+        } else {
+            for (int i = 0; i < aCount - bCount; i++) {
+                while (aLast != null) {
+                    aLast = aLast.next;
+
+                }
+            }
+            return aLast;
+        }
+    }
+}
+
+
+--------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+class Result {
+    ListNode last;
+    int count;
+
+    Result(ListNode last, int count) {
+        this.last = last;
+        this.count = count;
+    }
+}
+
+public class Solution {
+    public Result getLast(ListNode node) {
+        int count = 1; //0 --> 1
+        while (node.next != null) {
+            node = node.next;
+            count++;
+
+        }
+        return new Result(node, count);
+    }
+
+    public ListNode findIntersect(ListNode nodeA, ListNode nodeB){
+        while(nodeA != nodeB){
+            nodeA = nodeA.next;
+            nodeB = nodeB.next;
+        }
+        return nodeA;
+    }
+
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode aLast, bLast;
+
+        Result a = getLast(headA);
+        Result b = getLast(headB);
+
+        if (a.last != b.last)
+            return null;
+        
+        int diff = a.count - b.count;
+
+        if(diff == 0){
+            return findIntersect(headA,headB);
+        }
+
+        if(diff > 0){
+            ListNode movedA = headA;
+            while(diff > 0){
+                movedA = movedA.next;
+                diff--;
+            }
+            return findIntersect(movedA, headB);
+        }
+        else{
+            ListNode movedB = headB;
+            while(diff < 0){
+                movedB = movedB.next;
+                diff++;
+            }
+            return findIntersect(headA, movedB);
+        }
+
+    }
+}
