@@ -9,30 +9,21 @@
  * }
  */
 class Solution {
-    ListNode odd, even, evenPt;
-
-    /* Time : O(n)
-       Space : O(1) space*/
-
     public ListNode oddEvenList(ListNode head) {
         if(head == null || head.next == null){
             return head;
         }
 
-        odd = head;
-        evenPt = head.next;
-        even = head.next;
-
+        ListNode odd, even, initial_even;
+        odd = head; even = head.next; initial_even = head.next;
         while(even != null && even.next != null){
-
-            odd.next = odd.next.next;
+            odd.next = even.next;
             odd = odd.next;
-
-            even.next = even.next.next;
-            even = even.next; //moving the pointer
+            even.next = odd.next;
+            even = even.next;
         }
 
-        odd.next = evenPt;
-        return head;  
+        odd.next = initial_even;
+        return head;
     }
 }
