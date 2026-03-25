@@ -1,93 +1,24 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
+//Time : O(max(N,M))
+//Space : O(max(N,M))
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode result = null;
-        ListNode temp = null;
-        ListNode curr1 = l1;
-        ListNode curr2 = l2;
+        ListNode dummy = new ListNode(0); //new list creation
+        ListNode current = dummy;
 
-        int quotient = 0;
-        int sum = 0;
-        int remainder = 0;
+        int carry = 0;
 
-        while (curr1 != null && curr2 != null) {
-            sum = curr1.val + curr2.val + quotient;
-            remainder = sum % 10;
-            ListNode newNode = new ListNode(remainder);
-            quotient = sum / 10;
-            if (result == null) {
-                result = newNode;
-                temp = newNode;
-            } else {
-                temp.next = newNode;
-                temp = temp.next;
-            }
+        while(l1 != null || l2 != null || carry != 0){ //if carry has 1, it should be attached in the end
+            int val1 = (l1 != null) ? l1.val : 0;
+            int val2 = (l2 != null) ? l2.val : 0;
 
-            curr1 = curr1.next;
-            curr2 = curr2.next;
+            int sum = val1 + val2 + carry;
+            current.next = new ListNode(sum % 10);
+            carry = sum / 10;
+
+            current = current.next;
+            if(l1 != null) l1 = l1.next;
+            if(l2 != null) l2 = l2.next;
         }
-
-        //If traversal of any of the linkedList is completed, then
-        if (curr1 == null) {
-            while (curr2 != null) {
-                if (quotient == 0) {
-                    ListNode newNode = new ListNode(curr2.val);
-                    temp.next = newNode;
-
-                } else {
-                    sum = curr2.val + quotient;
-                    remainder = sum % 10;
-                    ListNode newNode = new ListNode(remainder);
-                    temp.next = newNode;
-
-                    quotient = sum / 10;
-                }
-                curr2 = curr2.next;
-                temp = temp.next;
-
-            }
-
-            if (quotient == 1) {
-                ListNode newNode = new ListNode(quotient);
-                temp.next = newNode;
-            }
-
-            return result;
-        }
-
-        else {
-            while (curr1 != null) {
-                if (quotient == 0) {
-                    ListNode newNode = new ListNode(curr1.val);
-                    temp.next = newNode;
-
-                } else {
-                    sum = curr1.val + quotient;
-                    remainder = sum % 10;
-                    ListNode newNode = new ListNode(remainder);
-                    temp.next = newNode;
-
-                    quotient = sum / 10;
-                }
-                curr1 = curr1.next;
-                temp = temp.next;
-
-            }
-
-            if (quotient == 1) {
-                ListNode newNode = new ListNode(quotient);
-                temp.next = newNode;
-            }
-            return result;
-        }
+    return dummy.next;
     }
 }
