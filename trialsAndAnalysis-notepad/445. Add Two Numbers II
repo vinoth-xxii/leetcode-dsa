@@ -1,0 +1,22 @@
+class Solution {
+    public ListNode getResultList(ListNode l1, ListNode l2, ListNode current){
+        // I am going to simple move forward
+        // I am go till one loop 1st; then starting moving the pointer of the another one
+        // I am going to keep track of nodes of individual list, for extra space ceration
+        
+        if(l1 == null){
+            return;
+        }
+        l1.next
+    }
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode current = dummy;
+
+        return getResultList(l1, l2, current);
+    }
+}
+
+-------------------------
+

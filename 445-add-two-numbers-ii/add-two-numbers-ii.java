@@ -1,5 +1,10 @@
-//Time : O(max(N,M)) -> 2N + 2M
-//Space : O(max(N,M)) -> N or M
+/*Time : O(max(N,M)) -> 2N + 2M
+Space : O(max(N,M)) -> N or M
+
+Corrections : Time -> O(M + N)
+	      Space -> O(M + N)
+*/
+
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         Stack<Integer> stackA = new Stack<>();
