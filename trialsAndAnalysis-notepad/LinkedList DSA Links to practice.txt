@@ -1,0 +1,23 @@
+https://leetcode.com/problems/remove-duplicates-from-sorted-list/description/
+https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/description/
+https://leetcode.com/problems/linked-list-cycle/description/
+https://leetcode.com/problems/linked-list-cycle-ii/description/
+https://leetcode.com/problems/intersection-of-two-linked-lists/submissions/1907622965/
+https://leetcode.com/problems/remove-linked-list-elements/description/
+https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/
+https://leetcode.com/problems/swapping-nodes-in-a-linked-list/description/
+https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/description/
+https://leetcode.com/problems/partition-list/description/
+https://leetcode.com/problems/odd-even-linked-list/description/
+https://leetcode.com/problems/reorder-list/description/
+https://leetcode.com/problems/sort-list/description/
+https://leetcode.com/problems/add-two-numbers/description/
+https://leetcode.com/problems/add-two-numbers-ii/solutions/1198222/problem-445-c-98-speed-with-explanations/
+
+
+Floyd's cycle detection (LeetCode 141)
+https://leetcode.com/problems/plus-one-linked-list/description/
+https://leetcode.com/problems/add-binary/description/
+https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/description/
+https://leetcode.com/problems/remove-linked-list-elements/description/
+https://leetcode.com/problems/intersection-of-two-linked-lists/description/
