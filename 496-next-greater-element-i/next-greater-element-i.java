@@ -11,21 +11,29 @@ class Solution {
         return arr.length - 1;
     }
 
+    public int getMax(Stack<Integer> stack, int target){
+        int res = -1;
+        while(!stack.isEmpty()){
+            int num = stack.pop();
+            if(num > target){
+                res = num;
+            }            
+        }
+        return res;
+    }
+
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
         int[] ans = new int[nums1.length];
         for(int i = 0; i < nums1.length; i++){
             int index = getIndex(nums1[i], nums2);
-            int max = nums1[i];
+            Stack<Integer> stack = new Stack<>();
             for(int k = index + 1; k < nums2.length; k++){
-                int prev_temp = max;
-                max = Math.max(max, nums2[k]);
-                if(prev_temp != max){
-                    break;
-                }
+                stack.push(nums2[k]);
             }
-            ans[i] = (max == nums1[i]) ? -1 : max;
+            int max = getMax(stack, nums1[i]);
+            ans[i] = max;
         }
 
         return ans;
     }
-}
+}  
