@@ -1,0 +1,92 @@
+class Solution {
+    public int operate(int nums1, int num2, String operator){
+        Switch(operator){
+            operator == "+":
+                return num1 + num2;
+            operator == "-":
+                return num1 - num2;
+            operator == "*":
+                return num1 * num2;
+            default:
+                return num1 / num2;
+        }
+    }
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> stack = new Stack<>();
+        for(String val : tokens){
+            if(val.isAlphaNumbneri){
+                stack.push(val);
+            }
+            else{
+                int val1 = stack.pop();
+                int val2 = stack.pop();
+                int valToPush = operate(val1, val2, val);
+                stack.push(valToPush);
+            }
+        }
+    }
+}
+
+----------------------
+
+class Solution {
+    public int operate(int nums1, int num2, String operator){
+        switch(operator){
+            case "+":
+                return num1 + num2;
+            case "-":
+                return num1 - num2;
+            case "*":
+                return num1 * num2;
+            default:
+                return num1 / num2;
+        }
+    }
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> stack = new Stack<>();
+        for(String val : tokens){
+            if(val.isAlphaNumbneri){
+                stack.push(val);
+            }
+            else{
+                int val1 = stack.pop();
+                int val2 = stack.pop();
+                int valToPush = operate(val1, val2, val);
+                stack.push(valToPush);
+            }
+        }
+    }
+}
+
+----------------------
+
+class Solution {
+    public int operate(int num1, int num2, String operator) { //O(1) time
+        switch (operator) {
+            case "+":
+                return num1 + num2;
+            case "-":
+                return num1 - num2;
+            case "*":
+                return num1 * num2;
+            default:
+                return num1 / num2;
+        }
+    }
+
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> stack = new Stack<>();       //O(N) space?
+        for (String token : tokens) {               //O(N) Time
+            try {
+                stack.push(Integer.parseInt(token));
+            } catch (NumberFormatException e) {
+                int val2 = stack.pop();
+                int val1 = stack.pop();
+                int valToPush = operate(val1, val2, token); 
+                stack.push(valToPush);
+            }
+
+        }
+        return stack.peek();
+    }
+}
