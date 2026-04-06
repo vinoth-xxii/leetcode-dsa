@@ -1,3 +1,6 @@
+//Time complexity : O(N^2)
+//Space complexity : O(N)
+
 class Solution {
 
     public int getNextMax(int index, int[] arr){ //O(N)
