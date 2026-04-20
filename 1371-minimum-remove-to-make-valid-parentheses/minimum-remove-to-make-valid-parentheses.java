@@ -1,0 +1,55 @@
+class Solution {
+
+    public String removeChars(String str, HashSet indices) {
+        String res = "";
+        for (int i = 0; i < str.length(); i++) {
+            if (!indices.contains(i)) {
+                res += str.charAt(i);
+            }
+        }
+        return res;
+    }
+
+    public String minRemoveToMakeValid(String s) {
+        ArrayList<Integer> open = new ArrayList<>();
+        ArrayList<Integer> close = new ArrayList<>();
+        HashSet<Integer> index = new HashSet<>();
+
+        int str_len = s.length();
+
+        for (int i = 0; i < str_len; i++) {
+            if (s.charAt(i) == '(') {
+                open.add(i);
+            } 
+            if (s.charAt(i) == ')') {
+                close.add(i);
+            }
+        }
+
+        int pt_1 = 0;
+        int pt_2 = 0;
+
+        while (pt_1 < open.size() && pt_2 < close.size()) {
+            if (open.get(pt_1) > close.get(pt_2)) {
+                index.add(close.get(pt_2));
+                pt_2++;
+            } else {
+                pt_1++;
+                pt_2++;
+            }
+        }
+
+        while (pt_1 < open.size()) {
+            index.add(open.get(pt_1));
+            pt_1++;
+        }
+
+        while (pt_2 < close.size()) {
+            index.add(close.get(pt_2));
+            pt_2++;
+        }
+
+        return removeChars(s, index);
+
+    }
+}
