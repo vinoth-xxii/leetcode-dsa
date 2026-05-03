@@ -1,0 +1,179 @@
+class Solution {
+    public int scoreOfParentheses(String s) {
+        //assign a varible to monitor whether it's it closed it
+        //if that count is greater than 1, then we'll go with product approach
+        //total sum will be tracked by another varialbe, we'll append the temp res to it
+        //for each iteration. 
+
+        //we will be using stack, and for loop, and if condition
+
+        int str_ln = s.length();
+        int open_count;
+        int temp_sum;
+        int total_sum = 0;
+        Stack<Character> stack = new Stack<>();
+
+        for(int i = 0; i < str_ln; i++){
+            char ch = s.charAt(i);
+            open_count = 0;
+            temp_sum = 1;
+
+            //i will not be stacking the closing brackets
+            if(ch == '('){
+                open_count++;
+                stack.push(ch);
+            }
+            else{
+                //got myself one doubt, why can't i track using the closing once?
+                //follow ups : will there be not ((()))
+                while(open_count > 1){ //product rule
+                    if(stack.peek() != null){
+                        temp_sum*=2;
+                        stack.pop();
+                        open_count--; //this could also help in this loop, can we just ignore the last element?                       
+                    }
+                }
+            }
+
+            total_sum+=temp_sum;
+        }
+        return total_sum;
+    }
+}
+
+----------------------------------------------------- (Some conditions are passing)
+class Solution {
+    public int scoreOfParentheses(String s) {
+        //assign a varible to monitor whether it's it closed it
+        //if that count is greater than 1, then we'll go with product approach
+        //total sum will be tracked by another varialbe, we'll append the temp res to it
+        //for each iteration. 
+
+        //we will be using stack, and for loop, and if condition
+
+        int str_ln = s.length();
+        int open_count = 0;
+        int temp_sum = 1;
+        int total_sum = 0;
+        Stack<Character> stack = new Stack<>();
+
+        for(int i = 0; i < str_ln; i++){
+            char ch = s.charAt(i);
+
+            //i will not be stacking the closing brackets
+            if(ch == '('){
+                open_count++;
+                stack.push(ch);
+            }
+            else{
+                //got myself one doubt, why can't i track using the closing once?
+                //follow ups : will there be not ((()))
+                while(open_count > 1){ //product rule
+                    if(stack.peek() != null){
+                        temp_sum*=2;
+                        stack.pop();
+                        open_count--; //this could also help in this loop, can we just ignore the last element?                       
+                    }
+                }
+                open_count = 0;
+                temp_sum = 0;
+            }
+
+            total_sum+=temp_sum;
+        }
+        return total_sum;
+    }
+}
+
+----------------------------------------------------(Some more conditions passed)
+class Solution {
+    public int scoreOfParentheses(String s) {
+        //assign a varible to monitor whether it's it closed it
+        //if that count is greater than 1, then we'll go with product approach
+        //total sum will be tracked by another varialbe, we'll append the temp res to it
+        //for each iteration. 
+
+        //we will be using stack, and for loop, and if condition
+
+        int str_ln = s.length();
+        int open_count = 0;
+        int temp_sum = 0;
+        int total_sum = 0;
+        boolean isRecurring = false;
+        Stack<Character> stack = new Stack<>();
+
+        for (int i = 0; i < str_ln; i++) {
+            char ch = s.charAt(i);
+
+            if (ch == '(') {
+                stack.push(ch);
+            } else {
+                stack.pop();
+                if(stack.isEmpty()){
+                    if(isRecurring){
+                        temp_sum *= 1;
+                    }
+                    else{
+                        temp_sum += 1;
+                    }
+                    
+                }
+                else{
+                    temp_sum = 1;
+                    temp_sum *= 2;
+                    isRecurring = true;
+                }
+            }
+            total_sum += temp_sum;
+            temp_sum = 0;
+        }
+        return total_sum;
+    }
+}
+
+---------------------------------------------------
+class Solution {
+    public int scoreOfParentheses(String s) {
+        //assign a varible to monitor whether it's it closed it
+        //if that count is greater than 1, then we'll go with product approach
+        //total sum will be tracked by another varialbe, we'll append the temp res to it
+        //for each iteration. 
+
+        //we will be using stack, and for loop, and if condition
+
+        int str_ln = s.length();
+        int open_count = 0;
+        int temp_sum = 0;
+        int total_sum = 0;
+        boolean isRecurring = false;
+        Stack<Character> stack = new Stack<>();
+
+        for (int i = 0; i < str_ln; i++) {
+            char ch = s.charAt(i);
+
+            if (ch == '(') {
+                stack.push(ch);
+                isRecurring = false;
+            } else {
+                stack.pop();
+                if(stack.isEmpty()){
+                    if(isRecurring){
+                        temp_sum *= 1;
+                    }
+                    else{
+                        temp_sum += 1;
+                    }
+                    
+                }
+                else{
+                    temp_sum = 1;
+                    temp_sum *= 2;
+                    isRecurring = true;
+                }
+            }
+            total_sum += temp_sum;
+            temp_sum = 0;
+        }
+        return total_sum;
+    }
+}
