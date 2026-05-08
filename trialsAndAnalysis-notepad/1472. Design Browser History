@@ -1,0 +1,87 @@
+class BrowserHistory {
+    /* If this point is confusing you : void visit(string url) Visits url from the current page. It clears up all the forward history.
+    
+    fix it in your mind, that you can move forward and backward by default like a normal browser.
+    obviously you'll be pushing the laterst site/url and nothing there to move forward.
+    
+    from this point you must under, that if you have planned to keep track of a stack for forward pages, this will make it empty is the logic i believe
+    */
+
+    Stack<String> history;
+    Stack<String> forwardHistory;
+
+    public BrowserHistory(String homepage) {
+        history = new Stack<>();
+        forwardHistory = new Stack<>();
+    }
+
+    public void visit(String url) {
+        history.push(url);
+        forwardHistory = new Stack<>();
+    }
+
+    public String back(int steps) {
+        String lastVisit = null;
+        while(!history.isEmpty() && steps > 0){
+            lastVisit = history.pop();
+            forwardHistory.push(lastVisit);
+            steps--;
+        }
+        return lastVisit;
+    }
+
+    public String forward(int steps) {
+        String current = null;
+        while(!forwardHistory.isEmpty() && steps > 0){
+            current = forwardHistory.pop();
+            history.push(current);
+            steps--;
+        }
+        return current;
+    }
+}
+
+---------------------------------------------------------------------
+
+class BrowserHistory {
+    /* If this point is confusing you : void visit(string url) Visits url from the current page. It clears up all the forward history.
+    
+    fix it in your mind, that you can move forward and backward by default like a normal browser.
+    obviously you'll be pushing the laterst site/url and nothing there to move forward.
+    
+    from this point you must under, that if you have planned to keep track of a stack for forward pages, this will make it empty is the logic i believe
+    */
+
+    Stack<String> history;
+    Stack<String> forwardHistory;
+
+    public BrowserHistory(String homepage) {
+        history = new Stack<>();
+        forwardHistory = new Stack<>();
+    }
+
+    public void visit(String url) {
+        history.push(url);
+        forwardHistory = new Stack<>();
+    }
+
+    public String back(int steps) {
+        String lastVisit = null;
+        while(history.size() > 1 && steps > 0){
+            lastVisit = history.pop();
+            forwardHistory.push(lastVisit);
+            steps--;
+        }
+        return history.peek();
+    }
+
+    public String forward(int steps) {
+        String current = null;
+        while(!forwardHistory.isEmpty() && steps > 0){
+            current = forwardHistory.pop();
+            history.push(current);
+            steps--;
+        }
+        return history.peek();
+    }
+}
