@@ -1,0 +1,227 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        /* Traverse towards left subtree with pushing it in stack.
+        When there is no more left subtree. The last added will be parent.
+        Then switch direct once to right. Repeate the above step.*/
+
+        /* You can't simply right is already visited current.right*/
+
+        if(root == null){
+            return new ArrayList<Integer>();
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        List<Integer> result = new ArrayList<>();
+        stack.push(root);
+        TreeNode current = root;
+        while(!stack.isEmpty()){
+            if(current.left != null){ //it will be a parent, store them in stack
+                current = current.left;
+                stack.push(current);
+            }
+            else{
+                TreeNode node = stack.peek();
+                if(node.right != null){
+                    current = node.right;
+                    stack.push(current);
+                }
+                else{   // 2 shouldn't look in its left. How to achieve it? or assume everything as a root node.
+                    node = stack.pop();
+                    result.add(node.val);
+                    
+                }
+            }
+        }
+        return result;
+    }
+}
+
+
+-------------------------------------------------------------------
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        /* Traverse towards left subtree with pushing it in stack.
+        When there is no more left subtree. The last added will be parent.
+        Then switch direct once to right. Repeate the above step.*/
+
+        /* You can't simply right is already visited current.right*/
+
+        if(root == null){
+            return new ArrayList<Integer>();
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        List<Integer> result = new ArrayList<>();
+        stack.push(root);
+        TreeNode current = root;
+        while(!stack.isEmpty()){
+            if(current.left != null){ //it will be a parent, store them in stack
+                current = current.left;
+                stack.push(current);
+            }
+            else{
+                TreeNode node = stack.peek();
+                if(node.right != null){
+                    current = node.right;
+                    stack.push(current);
+                }
+                else{   // 2 shouldn't look in its left. How to achieve it? or assume everything as a root node.
+                    while(!stack.isEmpty()){
+                        node = stack.pop();
+                        if(node.right)
+                        result.add(node.val);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+}
+
+---------------------------------------------------------------------------
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        /* Traverse towards left subtree with pushing it in stack.
+        When there is no more left subtree. The last added will be parent.
+        Then switch direct once to right. Repeate the above step.*/
+
+        /* You can't simply right is already visited current.right*/
+
+        if(root == null){
+            return new ArrayList<Integer>();
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        List<Integer> result = new ArrayList<>();
+        stack.push(root);
+        TreeNode current = root;
+        while(!stack.isEmpty()){
+            if(current.left != null){ //it will be a parent, store them in stack
+                current = current.left;
+                stack.push(current);
+            }
+            else{
+
+                while(!stack.isEmpty()){
+                    TreeNode node = stack.peek();
+                    if(node.right != null){
+                        current = node.right;
+                        stack.push(current);
+                        break;
+                    }
+                    else{
+                        result.add(node.val);
+                        stack.pop();
+                        current = stack.peek();
+                    }
+                }
+            }
+        }
+        return result;
+    }
+}
+
+----------------------------------------------------------------------- (Passed some test cases)
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        /* Traverse towards left subtree with pushing it in stack.
+        When there is no more left subtree. The last added will be parent.
+        Then switch direct once to right. Repeate the above step.*/
+
+        /* You can't simply right is already visited current.right*/
+
+        if(root == null){
+            return new ArrayList<Integer>();
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        List<Integer> result = new ArrayList<>();
+        stack.push(root);
+        TreeNode current = root;
+        while(!stack.isEmpty()){
+            if(current.left != null){ //it will be a parent, store them in stack
+                current = current.left;
+                stack.push(current);
+            }
+            else{
+
+                while(!stack.isEmpty()){
+                    TreeNode node = stack.pop();
+                    if(node.right != null){
+                        current = node.right;
+                        stack.push(current);
+                        break;
+                    }
+                    else{
+                        result.add(node.val);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+}
+

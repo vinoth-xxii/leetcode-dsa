@@ -29,3 +29,79 @@ class Solution {
         return prices[max] - prices[min];
     }
 }
+
+
+class Solution {
+    public int maxProfit(int[] prices) {
+       int min = prices[0];
+       int max = prices[0];
+       for(int i = 0; i < prices.length; i++){
+            if(prices[i] < min){ //whenever i get new minimum, i will update the max
+                max = prices[i];
+                min = prices[i];
+            }
+            else{
+                max = prices[i]
+            }
+       }
+
+       return max
+    }
+}
+
+
+class Solution {
+    public int maxProfit(int[] prices) {
+       int min = 0;
+       int max = 0;
+       for(int i = 1; i < prices.length; i++){ //just traversing the array
+            if(prices[i] < min){ //whenever i get new minimum, i will update the max
+                max = prices[i];
+                min = prices[i];
+            }
+            else{
+                max = i; //i don't want to update the max pointer as i will always be updaing. Instead store the max difference.
+            }
+       }
+
+       return max
+    }
+}
+
+class Solution {    //passes only for certain conditons
+    public int maxProfit(int[] prices) {
+       int min_pt = 0;
+       int total = 0;
+       for(int i = 1; i < prices.length; i++){ //just traversing the array
+            if(prices[i] < prices[min_pt]){ //whenever i get new minimum, i will update the max
+                min_pt = i;
+                total = 0;
+            }
+            else{
+                int difference = prices[i] - prices[min_pt];
+                total = Math.max(difference, total);
+            }
+       }
+
+       return total;
+    }
+}
+
+class Solution {    //passes only for certain conditons
+    public int maxProfit(int[] prices) {
+       int min_pt = 0;
+       int total = 0;
+       for(int i = 1; i < prices.length; i++){ //just traversing the array
+            if(prices[i] < prices[min_pt]){ //whenever i get new minimum, i will update the max
+                min_pt = i;
+                // total = 0;
+            }
+            else{
+                int difference = prices[i] - prices[min_pt];
+                total = Math.max(difference, total);
+            }
+       }
+
+       return total;
+    }
+}
