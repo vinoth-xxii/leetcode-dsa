@@ -1,0 +1,95 @@
+class Solution { // Quadratic time implementaion, leads to time out exception
+    public int maxArea(int[] height) {
+        //i will initialise total vol, 
+        //using nested loops, i could find the max volume
+
+        //how do i find the volume? vol of rectangle in l x b x h
+        //where l is Math.min(outerloop, innerloop)
+        //where b is innterloop - outerloop
+
+        //since it has only two axis l X b
+
+        int area = 0;
+        int length = 0;
+        int breath = 0;
+
+        for(int i = 0; i < height.length; i++){
+            for(int j = 0; j < height.length; j++){
+                length = j - i;
+                breath = Math.min(height[i], height[j]);
+                area = Math.max(area, length * breath);
+            }
+        }
+        return area;
+    }
+}
+
+-----------------------------------------------------------------------------------
+
+class Solution {
+    public int maxArea(int[] height) {
+        //let try using two pointer and logic i understood from 3rd hint
+        //Move the left and right pointer torwards center one by one
+
+        int left = 0;
+        int right = height.length - 1;
+        int track = 1;
+        int area = 0;
+
+        while(left < right){
+            //how do i move left and right alreanatively? using odd even logic? lol
+            if(track % 2 == 0){
+                left++;
+                track++;
+            }
+            else{
+                right--;
+                track++;
+            }
+
+            int breath = Math.min(height[left], height[right]);
+            int length = right - left;
+            area = Math.max(breath * length, area);
+
+        }
+
+        return area;
+    }
+}
+
+----------------------------------------------------------------------------------
+Note after code : [8,7,2,1]
+For the above example after the 1st iteraion, we move to 7. By doing so we did not 
+check 8 with 2.
+
+class Solution {
+    public int maxArea(int[] height) {
+        //let try using two pointer and logic i understood from 3rd hint
+        //Move the left and right pointer torwards center one by one
+
+        int left = 0;
+        int right = height.length - 1;
+        int track = 0;					//changing it to zero, made it pass through few test cases
+        int area = 0;
+
+        while(left < right){
+
+            int breath = Math.min(height[left], height[right]);
+            int length = right - left;
+            area = Math.max(breath * length, area);
+
+            //how do i move left and right alreanatively? using odd even logic? lol
+            if(track % 2 == 0){
+                left++;
+                track++;
+            }
+            else{
+                right--;
+                track++;
+            }
+
+        }
+
+        return area;
+    }
+}
