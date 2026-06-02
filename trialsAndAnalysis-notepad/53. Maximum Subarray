@@ -1,0 +1,142 @@
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int[] arr = new int[nums.length];
+        for(int i = 0; i < nums.length; i++){
+            arr[i] = nums[i];
+        }
+
+        int max_sum = Integer.MIN_VALUE;
+        for(int k = 1; k < nums.length; k++){
+            arr[k] += arr[k-1];
+        }
+
+        int ignore_val = nums[0];
+        for(int j = 1; j < nums.length; j++){
+            for(int l = j; l < nums.length; l++){
+                arr[l]-=ignore_val;
+                max_sum = Math.max(max_sum, arr[l]);
+            }
+            ignore_val += nums[j];
+        }
+
+    return max_sum;
+    }
+}
+
+--------------------------------------------------------
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int[] arr = new int[nums.length];
+        for(int i = 0; i < nums.length; i++){
+            arr[i] = nums[i];
+        }
+
+        int max_sum = Integer.MIN_VALUE;
+        for(int k = 1; k < nums.length; k++){
+            arr[k] += arr[k-1];
+        }
+
+        int ignore_val = nums[0];
+        for(int j = 1; j < nums.length; j++){
+            for(int l = j; l < nums.length; l++){
+                arr[l]-=ignore_val;
+                max_sum = Math.max(max_sum, arr[l]);
+            }
+            ignore_val = nums[j];
+        }
+
+    return max_sum;
+    }
+}
+
+
+-----------------------------------------------------------
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int[] arr = new int[nums.length];
+
+        int max_sum = Integer.MIN_VALUE;
+
+        for(int i = 0; i < nums.length; i++){
+            arr[i] = nums[i];
+            max_sum += nums[i];
+        }
+
+        for(int k = 1; k < nums.length; k++){
+            arr[k] += arr[k-1];
+        }
+
+        int ignore_val = nums[0];
+        for(int j = 1; j < nums.length; j++){
+            for(int l = j; l < nums.length; l++){
+                arr[l]-=ignore_val;
+                max_sum = Math.max(max_sum, arr[l]);
+            }
+            ignore_val = nums[j];
+        }
+
+    return max_sum;
+    }
+}
+
+--------------------------------------------------------- Only passed few test cases
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int[] arr = new int[nums.length];
+
+        int max_sum = 0; //the issue in the line is reported by ai
+
+        for(int i = 0; i < nums.length; i++){
+            arr[i] = nums[i];
+            max_sum += nums[i];
+        }
+
+        for(int k = 1; k < nums.length; k++){
+            arr[k] += arr[k-1];
+        }
+
+        int ignore_val = nums[0];
+        for(int j = 1; j < nums.length; j++){
+            for(int l = j; l < nums.length; l++){
+                arr[l]-=ignore_val;
+                max_sum = Math.max(max_sum, arr[l]);
+            }
+            ignore_val = nums[j];
+        }
+
+    return max_sum;
+    }
+}
+
+---------------------------------------------------------
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int[] arr = new int[nums.length];
+
+        int max_sum = nums[0];
+
+        for(int i = 0; i < nums.length; i++){
+            arr[i] = nums[i];
+        }
+
+        for(int k = 1; k < nums.length; k++){
+            arr[k] += arr[k-1];
+            max_sum = Math.max(max_sum, arr[k]);
+        }
+
+        int ignore_val = nums[0];
+        for(int j = 1; j < nums.length; j++){
+            for(int l = j; l < nums.length; l++){
+                arr[l]-=ignore_val;
+                max_sum = Math.max(max_sum, arr[l]);
+            }
+            ignore_val = nums[j];
+        }
+
+    return max_sum;
+    }
+}
