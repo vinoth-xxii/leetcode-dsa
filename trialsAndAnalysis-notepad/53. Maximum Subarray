@@ -111,7 +111,7 @@ class Solution {
     }
 }
 
----------------------------------------------------------
+--------------------------------------------------------- Time Limit Exceeded for the below approach
 
 class Solution {
     public int maxSubArray(int[] nums) {
@@ -140,3 +140,42 @@ class Solution {
     return max_sum;
     }
 }
+
+----------------------------------------------------------------------- //flawed logic, 
+/*
+consider example [5,1,9,-10] and space is 2 then: 
+1. total - (5 + 1)
+2. total - (9 - 10)
+
+but you would miss : total - (1 + 9)
+
+*/ 
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int max_sum = Integer.MIN_VALUE;
+        int left = 0;
+        int right = nums.length - 1;
+
+        //below snippet is for the preparation
+        int total_sum = 0;
+        for(int i = 0; i < nums.lenght; i++){
+            max_sum = Math.max(max_sum, nums[i]);
+            total_sum += nums[i];
+            max_sum = Math.max(max_sum, total_sum);
+        }
+
+        //now comes the traversal part
+        int left_space_sum = nums[left]; //0
+        int right_space_sum = nums[right]; //n-1
+        while(right - left > 0 && right > left){ //don't complicate it, index is same then 0.
+            //subract both left 1st and then subtract right each time 
+            max_sum = Math.max(max_sum, total_sum - left_space_sum);
+            max_sum = Math.max(max_sum, total_sum - right_space_sum);
+            left_space_sum += nums[++left];
+            right_space_sum += nums[--right];
+        }
+
+    }
+}
+
+------------------------------------------------------------------------------------------

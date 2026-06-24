@@ -1,0 +1,865 @@
+class Solution {
+    int count = 0;
+
+    public void getModdedList(ListNode node1, ListNode node2) {
+        int count2 = 0;
+        ListNode lastInserted = null;
+
+        while (count2 < count / 2) {
+            ListNode dummy = node1.next;
+
+            node1.next = node2;
+
+            ListNode dummy2 = node2.next;
+            node2.next = dummy;
+
+            node2 = dummy2;
+            node1 = dummy;
+
+            lastInserted = dummy;
+            count2++;
+        }
+
+        if (lastInserted != null) {
+            lastInserted.next = null;
+        }
+    }
+
+    public ListNode getReversedLinkedList(ListNode head) {
+        ListNode current = null;
+
+        while (head != null) {
+            ListNode newNode = new ListNode(head.val);
+
+            newNode.next = current;
+            current = newNode;
+
+            head = head.next;
+            count++;
+        }
+
+        return current;
+    }
+
+    public void reorderList(ListNode head) {
+        if (head == null) {
+            return;
+        }
+
+        ListNode head2 = getReversedLinkedList(head);
+
+        getModdedList(head, head2);
+    }
+}
+
+----------------------------------------------------------------------- only changed variables to a meaningful name
+
+class Solution {
+    int total_length = 0;
+
+    public void getModdedList(ListNode node1, ListNode node2) {
+        int count = 0;
+        ListNode lastInserted = null;
+
+        while (count < total_length / 2) {
+            ListNode dummy = node1.next;
+
+            node1.next = node2;
+
+            ListNode dummy2 = node2.next;
+            node2.next = dummy;
+
+            node2 = dummy2;
+            node1 = dummy;
+
+            lastInserted = dummy;
+            count++;
+        }
+
+        if (lastInserted != null) {
+            lastInserted.next = null;
+        }
+    }
+
+    public ListNode getReversedLinkedList(ListNode head) {
+        ListNode current = null;
+
+        while (head != null) {
+            ListNode newNode = new ListNode(head.val);
+
+            newNode.next = current;
+            current = newNode;
+
+            head = head.next;
+            total_length++;
+        }
+
+        return current;
+    }
+
+    public void reorderList(ListNode head) {
+        if (head == null) {
+            return;
+        }
+
+        ListNode head2 = getReversedLinkedList(head);
+
+        getModdedList(head, head2);
+    }
+}
+
+---------------------------------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public void reorderList(ListNode head) {
+        int length = 0;
+        Stack<ListNode> stack = new Stack<>();
+        
+        ListNode current = head;
+        while(current != null){
+            stack.push(current);
+            length++;
+            current = current.next;
+        }
+
+        int count = 0;
+        current = head;
+        while(count < length / 2){
+            ListNode dummy = current.next; //preserving current't next for holding continuity
+            current.next = stack.pop();
+            current = current.next;
+            current.next = dummy;
+        }
+    }
+}
+
+------------------------------------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public void reorderList(ListNode head) {
+        int length = 0;
+        Stack<ListNode> stack = new Stack<>();
+        
+        ListNode current = head;
+        while(current != null){
+            stack.push(current);
+            length++;
+            current = current.next;
+        }
+
+        int count = 0;
+        current = head;
+        while(count < length / 2 && current != null && current.next != null && !stack.isEmpty()){
+            ListNode dummy = current.next; //preserving current't next for holding continuity
+            current.next = stack.pop();
+            current = current.next;
+            current.next = dummy;
+        }
+    }
+}
+
+
+Input
+head =
+[1,2,3,4]
+Output
+Error - Found cycle in the ListNode
+Expected
+[1,4,2,3]
+
+---------------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+
+    public getNewReversedLL(ListNode head){
+        ListNode tail = new ListNode(head.val, null);
+        ListNode curr = head;
+        while(curr.next != null){
+            curr = curr.next;
+            ListNode newNode = new ListNode(curr.val, tail);
+        }
+    }
+
+    public void reorderList(ListNode head) {
+        ListNode head2 = getNewReversedLL(head2);
+
+    }
+}
+
+-------------------------------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+
+    int lenght = 0;
+    public ListNode getNewReversedLL(ListNode head){
+        ListNode next = null
+        ListNode curr = head;
+
+        while(curr != null){
+            ListNode newNode = new ListNode(curr.val, next);
+            next = curr;
+            curr = current.next;
+            length++;
+        }
+    }
+
+    public ListNode mergeHalfLL(ListNode node1, ListNode node2){
+        int count = 1;
+        while(count <= length/2){
+            ListNode dummy1 = node1.next; //securing the LinkedList
+            ListNode dummy2 = node2.next;
+
+            node1.next = node2;
+            node2.next = dummy1;
+            
+        }
+    }
+
+    public void reorderList(ListNode head) {
+        ListNode head2 = getNewReversedLL(head1);
+        head = mergeHalfLL(head, head2);
+
+    }
+}
+
+---------------------------------------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+
+    int lenght = 0;
+    public ListNode getNewReversedLL(ListNode head){
+        ListNode next = null
+        ListNode curr = head;
+
+        while(curr != null){
+            ListNode newNode = new ListNode(curr.val, next);
+            next = curr;
+            curr = current.next;
+            length++;
+        }
+    }
+
+    public ListNode mergeHalfLL(ListNode regular, ListNode reversed){
+        int count = 1;
+        while(count <= length/2){
+            ListNode dummy1 = regular.next; //securing the LinkedList
+            ListNode dummy2 = reversed.next;
+
+            regular.next = reversed;
+            reversed.next = dummy1;
+
+        }
+    }
+
+    public void reorderList(ListNode head) {
+        ListNode head2 = getNewReversedLL(head1);
+        head = mergeHalfLL(head, head2);
+
+    }
+}
+
+------------------------------------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+
+    int length = 0;
+    public ListNode getNewReversedLL(ListNode head){
+        ListNode next = null;
+        ListNode curr = head;
+
+        while(curr != null){
+            ListNode newNode = new ListNode(curr.val, next);
+            next = curr;
+            curr = curr.next;
+            length++;
+        }
+    }
+
+    public ListNode mergeHalfLL(ListNode regular, ListNode reversed){
+        int count = 1;
+        ListNode result = null;
+        ListNode node1 = null;
+        ListNode node2 = null;
+
+        while(count <= length/2){
+            if(result != null){
+                ListNode temp = node2;
+            }
+            node2 = newNode(reversed.val);
+            node1 = newNode(regular.val, node2);
+            if(temp != null) temp.next = node1; //connecting the duro genered node to pre Link
+            if(result == null){
+                result = node1;
+            }
+            regular = regular.next;
+            reversed = reversed.next;
+        }
+        node2.next = null;
+        return result;
+    }
+
+    public void reorderList(ListNode head) {
+        ListNode head2 = getNewReversedLL(head1);
+        head = mergeHalfLL(head, head2);
+
+    }
+}
+
+----------------------------------------------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode geteReveredLL(ListNode node){
+        ListNode temp = null;
+        ListNode next = null;
+        while(node != null){
+            temp = node.next;
+            node.next = next;
+            if(temp != null){
+                node = temp;
+                next = node;
+            }
+            else{
+                break;
+            }
+    }
+    return node;
+    }
+
+    public void reorderList(ListNode head) {
+        ListNode left = head;
+        ListNode right = head.next;
+
+        while(right != null && right.next != null){
+            left = left.next;
+            right = right.next.next;
+        }
+
+        left.next = geteReveredLL(left.next);
+    }
+}
+
+
+-----------------------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode geteReveredLL(ListNode node){
+        ListNode temp = null;
+        ListNode next = null;
+        while(node != null){
+            temp = node.next;
+            node.next = next;
+            next = node;
+            node = temp;
+    }
+    return node;
+    }
+
+    public void reorderList(ListNode head) {
+        ListNode left = head;
+        ListNode right = head.next;
+
+        while(right != null && right.next != null){
+            left = left.next;
+            right = right.next.next;
+        }
+
+        left.next = geteReveredLL(left.next);
+    }
+}
+
+
+--------------------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode geteReveredLL(ListNode node){
+        ListNode temp = null;
+        ListNode next = null;
+        while(node.next != null){
+            temp = node.next;
+            node.next = next;
+            next = node;
+            node = temp;
+            node.next = next;
+        }
+        node.next = next;
+        return node;
+    }
+
+    public void reorderList(ListNode head) {
+        ListNode left = head;
+        ListNode right = head.next;
+
+        while(right != null && right.next != null){
+            left = left.next;
+            right = right.next.next;
+        }
+
+        left.next = geteReveredLL(left.next);
+    }
+}
+
+
+--------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode geteReveredLL(ListNode node){
+        ListNode temp = null;
+        ListNode next = null;
+        while(node.next != null){
+            temp = node.next;
+            node.next = next;
+            next = node;
+            node = temp;
+        }
+        node.next = next;
+        return node;
+    }
+
+    public shuffleLL(ListNode left, ListNode right){
+        ListNode mid = right.next;
+        
+        ListNode leftNext = null;
+        ListNode rightNext = null;
+        while(left != mid){
+            leftNext = left.next;
+            rightNext = right.next;
+            left.next = right;
+        }
+    }
+
+    public void reorderList(ListNode head) {
+        ListNode left = head;
+        ListNode right = head.next;
+
+        while(right != null && right.next != null){
+            left = left.next;
+            right = right.next.next;
+        }
+
+        left.next = geteReveredLL(left.next);
+        shuffleLL(head, left);
+    }
+}
+
+
+---------------------------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode geteReveredLL(ListNode node){
+        ListNode temp = null;
+        ListNode next = null;
+        while(node.next != null){
+            temp = node.next;
+            node.next = next;
+            next = node;
+            node = temp;
+        }
+        node.next = next;
+        return node;
+    }
+
+    public void shuffleLL(ListNode left, ListNode mid){
+        ListNode right = mid.next;
+        
+        ListNode nextLeft = null;
+        ListNode nextRight = null;
+        while(left != mid){
+            nextLeft = left.next;
+            nextRight = right.next;
+            left.next = right;
+            right.next = nextLeft;
+            left = nextLeft;
+            right = nextRight;
+        }
+        left.next = null;
+    }
+
+    public void reorderList(ListNode head) {
+        ListNode left = head;
+        ListNode right = head.next;
+
+        while(right != null && right.next != null){
+            left = left.next;
+            right = right.next.next;
+        }
+
+        left.next = geteReveredLL(left.next);
+        shuffleLL(head, left);
+    }
+}
+
+
+---------------------------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    int count = 1;
+    public ListNode geteReveredLL(ListNode node){
+        ListNode temp = null;
+        ListNode next = null;
+        while(node.next != null){
+            temp = node.next;
+            node.next = next;
+            next = node;
+            node = temp;
+        }
+        node.next = next;
+        return node;
+    }
+
+    public void shuffleLL(ListNode left, ListNode mid){
+        ListNode right = mid.next;
+        
+        ListNode nextLeft = null;
+        ListNode nextRight = null;
+        ListNode temp1 = null;
+        ListNode temp2 = null;
+
+        while(right != null && right.next != null){
+            nextLeft = left.next;
+            nextRight = right.next;
+            left.next = right;
+            right.next = nextLeft;
+            left = nextLeft;
+            right = nextRight;
+        }
+        if(right.next == null){
+            left.next = null;
+        }
+        else{
+            right.next = null;
+        }
+    }
+
+    public void reorderList(ListNode head) {
+        ListNode left = head;
+        ListNode right = head.next;
+
+        while(right != null && right.next != null){
+            left = left.next;
+            count++;
+            right = right.next.next;
+        }
+
+        left.next = geteReveredLL(left.next);
+        shuffleLL(head, left);
+    }
+}
+
+---------------------------------------------------------------- 
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    int count = 1;
+    public ListNode geteReveredLL(ListNode node){
+        ListNode temp = null;
+        ListNode next = null;
+        while(node.next != null){
+            temp = node.next;
+            node.next = next;
+            next = node;
+            node = temp;
+        }
+        node.next = next;
+        return node;
+    }
+
+    public void shuffleLL(ListNode left, ListNode mid){
+        ListNode right = mid.next;
+        
+        ListNode nextLeft = null;
+        ListNode nextRight = null;
+        ListNode temp1 = null;
+        ListNode temp2 = null;
+
+        while(left != mid){
+            nextLeft = left.next;
+            nextRight = right.next;
+            left.next = right;
+            right.next = nextLeft;
+            left = nextLeft;
+            right = nextRight;
+        }
+        if(right == null){
+            left.next = null;
+        }
+        else{
+            right.next = null;
+        }
+    }
+
+    public void reorderList(ListNode head) {
+        ListNode left = head;
+        ListNode right = head.next;
+
+        while(right != null && right.next != null){
+            left = left.next;
+            count++;
+            right = right.next.next;
+        }
+
+        left.next = geteReveredLL(left.next);
+        shuffleLL(head, left);
+    }
+}
+
+
+----------------------------------------------------------- (Visible test cases passed)
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode geteReveredLL(ListNode node){
+        ListNode temp = null;
+        ListNode next = null;
+        while(node.next != null){
+            temp = node.next;
+            node.next = next;
+            next = node;
+            node = temp;
+        }
+        node.next = next;
+        return node;
+    }
+
+    public void shuffleLL(ListNode left, ListNode mid){
+        ListNode right = mid.next;
+        
+        ListNode nextLeft = null;
+        ListNode nextRight = null;
+        ListNode temp1 = null;
+        ListNode temp2 = null;
+
+        while(left != mid){
+            nextLeft = left.next;
+            nextRight = right.next;
+            left.next = right;
+            right.next = nextLeft;
+            left = nextLeft;
+            right = nextRight;
+        }
+        if(right == null){ //for odd elements
+            left.next = null;
+        }
+        else{
+            left.next = right; //for even elements
+            right.next = null;
+        }
+    }
+
+    public void reorderList(ListNode head) {
+        ListNode left = head;
+        ListNode right = head.next;
+
+        while(right != null && right.next != null){
+            left = left.next;
+            right = right.next.next;
+        }
+
+        left.next = geteReveredLL(left.next);
+        shuffleLL(head, left);
+    }
+}
+
+---------------------------------------------------------------
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode geteReveredLL(ListNode node){
+        ListNode temp = null;
+        ListNode next = null;
+        while(node.next != null){
+            temp = node.next;
+            node.next = next;
+            next = node;
+            node = temp;
+        }
+        node.next = next;
+        return node;
+    }
+
+    public void shuffleLL(ListNode left, ListNode mid){
+        ListNode right = mid.next;
+        
+        ListNode nextLeft = null;
+        ListNode nextRight = null;
+        ListNode temp1 = null;
+        ListNode temp2 = null;
+
+        while(left != mid){
+            nextLeft = left.next;
+            nextRight = right.next;
+            left.next = right;
+            right.next = nextLeft;
+            left = nextLeft;
+            right = nextRight;
+        }
+        if(right == null){ //for odd elements
+            left.next = null;
+        }
+        else{
+            left.next = right; //for even elements
+            right.next = null;
+        }
+    }
+
+    public void reorderList(ListNode head) {
+        ListNode left = head;
+        ListNode right = head.next;
+
+        if(right == null) return;
+        
+        while(right != null && right.next != null){
+            left = left.next;
+            right = right.next.next;
+        }
+
+        left.next = geteReveredLL(left.next);
+        shuffleLL(head, left);
+    }
+}
