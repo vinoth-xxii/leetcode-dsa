@@ -9,39 +9,49 @@
  *     }
  * }
  */
-
-/* I knew i had to traverse from last to first to get the intersecting value,
-The problem was how do i achieve it or aka how to keep track or store it without
-simply using hashmp or an array, then traverse it back. then i immediately thought of using 
-stack, which follows LIFO*/
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        Stack<ListNode> stackA = new Stack<>();
-        Stack<ListNode> stackB = new Stack<>();
+        int lengthA = 0;
+        int lengthB = 0;
 
         ListNode currA = headA;
-        while(currA != null){
-            stackA.push(currA);
+        ListNode currB = headB;
+
+        while (currA != null) {
+            lengthA++;
             currA = currA.next;
         }
 
-        ListNode currB = headB;
-        while(currB != null){
-            stackB.push(currB);
+        while (currB != null) {
+            lengthB++;
             currB = currB.next;
         }
 
-        ListNode result = null;
-        while(!stackA.isEmpty() && !stackB.isEmpty()){
-            ListNode tempA = stackA.pop();
-            ListNode tempB = stackB.pop();
-            if(tempA == tempB){
-                result = tempA;
+        int diff = Math.abs(lengthA - lengthB);
+
+        currA = headA;
+        currB = headB;
+
+        if (lengthA >= lengthB) {
+            while (diff > 0) {
+                currA = currA.next;
+                diff--;
             }
-            else{
-                break;
+        } else {
+            while (diff > 0) {
+                currB = currB.next;
+                diff--;
             }
         }
-        return result;
+
+        while (currA != null) {
+            if (currA == currB) {
+                return currA;
+            }
+            currA = currA.next;
+            currB = currB.next;
+        }
+
+    return currA;    
     }
 }
