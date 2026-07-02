@@ -9,47 +9,37 @@
  * }
  */
 class Solution {
-
-    int k;
-
-    public ListNode getFromLeft(ListNode node) { // O(n) time
-        for (int i = 1; i < k; i++) {
-            node = node.next;
-        }
-        return node;
-    }
-
-    public ListNode getFromRight(ListNode node) { // O(n) time
-        int count = 1;
-        ListNode left = node;
-        ListNode right = node;
-        while (right.next != null) {
-            right = right.next;
-            if (count >= k) {
-                left = left.next;
-            }
-            count++;
-        }
-        return left;
-    }
-
     public ListNode swapNodes(ListNode head, int k) {
-        /*
-        Approach 1: 
-        I will store the kth node from the beginning and from the end;
-        using the knowledge from the removing nth node; and will swap those element
-        
-        Approach 2: (Given hint)
-        Using array and indexing (kth value from the input)
-        */
-        this.k = k;
-        ListNode a = getFromLeft(head); //1 is for left, -1 is from right, reverse
-        ListNode b = getFromRight(head);
+        ListNode nodeA = head;
+        ListNode nodeB = head;
+        ListNode advance = head;
 
-        int temp = a.val; // O(1) time
-        a.val = b.val;
-        b.val = temp;
+        //imagaing starting from 1st position already, how many places do you want to move
+        for(int i = 0; i < k - 1; i++){
+            nodeA = nodeA.next;
+        }
+
+        //let's us find the nodeB's correct address
+        //should it be advance or advance.next?
+        //how long whould you wish to make nodeB wait if k = 1, no wait
+        //and defanatily not equal to right
+        int count = 0;
+        while(advance != null){
+            if(count > k - 1){
+                advance = advance.next;
+                nodeB = nodeB.next;
+            }
+            else{
+                advance = advance.next;
+                count++;
+            }
+        }
+
+        int temp = nodeB.val;
+        nodeB.val = nodeA.val;
+        nodeA.val = temp;
 
         return head;
     }
+
 }
