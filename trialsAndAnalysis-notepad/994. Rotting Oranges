@@ -1,0 +1,1167 @@
+class Solution {
+
+    public int findInfected(int[][] grid){
+        int row = grid.length(-1);
+        int column = grid.length();
+
+        for(int i = 0; i < row - 1; i++){
+            for(int j = 0; j < column - 1; j++){
+                if(grid[i][j] == 2){
+                    return new int[]{i, j};
+                }
+            }
+        }
+    }
+
+    public int orangesRotting(int[][] grid) {
+        int[] infected = findInfected(grid);
+        int g_count = 0;
+        int count = 0;
+        Set<Integer, Integer> visited = new Set<>();
+
+        Queue<Integer, Integer> queue = new Dequeue<>();
+        queue.push(infected);
+        count++;
+
+        while(!queue.isEmpty() ){
+            for(int i = 0; i < count; i++){
+                infected = queue.pop();
+            }
+            //make it infected
+            int i = infected[0];
+            int j = infected[1];
+            grid[i][j] = 2;
+            //add the adjacent
+            if(i > 0){
+                queue.add(new int[]{i-1, j});
+                count++;
+                queue.add(new int[]{i+1, j});
+                count++;
+            }
+            if(j > 0){
+                queue.add(new int[]{i, j - 1});
+                count++;
+                queue.add(new int[]{i, j + 1});
+                count++;
+            }
+        }
+    }
+}
+
+-------------------------------------------------------------------------------------------
+
+class Solution {
+
+    int queue_count = 1; //since we have added the rotten orange
+    int row_length = 0;
+    int col_length = 0;
+
+    public int[] getRottenOrange(int[][] arr){
+        row_length = arr.length();
+        col_length = arr[0].length();
+
+        for(int i = 0; i < row_length; i++){
+            for(int j = 0; j < col_length; j++){
+                if(arr[i][j] == 2) return new int[]{i,j};
+            }
+        }
+    }
+
+    public void putVisited(int[] rotten, Map<Integer, Integer>, int count){
+        int i = rotten[0];
+        int j = rotten[1];
+
+        if(i > 0 && i < row_length - 1){
+            queue.push(new int[]{i - 1, j});
+            queue.push(new int[]{i + 1, j});
+        }
+
+        if(j > 0 && j < col_length - 1){
+            queue.push(new int[]{i, j - 1});
+            queue.push(new int[]{i , j + 1});
+        }
+
+    }
+
+    public int orangesRotting(int[][] grid) {
+        Queue<Integer[]> queue = new LinkedList<>();
+        int[] rottenOrange = getRottenOrange(grid);
+
+        queue.add(queue);
+        int count = 0;
+        Map<Integer, Integer> visited = new HashMap<>();
+        while(!queue.isEmpty()){
+            int temp_count = queue_count;
+            queue_count = 0;
+            while(temp_count > 0){
+                int[] rotten = queue.pop();
+                visited.add(rotten);
+                putAdjacent(rotten, visited, count);
+                temp_count--;
+            }
+        }
+
+
+    }
+}
+
+----------------------------------------------------------------- (for the question we assumented, there will be only one rotten orange. But it is not)
+
+class Solution {
+
+    int queue_count = 0; //since we have added the rotten orange
+    int row_length = 0;
+    int col_length = 0;
+
+    public void getRottenOrange(int[][] arr, Queue<Integer[]>){
+        row_length = arr.length();
+        col_length = arr[0].length();
+
+        for(int i = 0; i < row_length; i++){
+            for(int j = 0; j < col_length; j++){
+                if(arr[i][j] == 2){
+                    queue.push(new int[]{i, j});
+                    queue_count++;
+                }
+            }
+        }
+    }
+
+    public void putVisited(int[] rotten, Map<Integer, Integer>, int count){
+        int i = rotten[0];
+        int j = rotten[1];
+
+        if(i > 0 && i < row_length - 1){
+            queue.push(new int[]{i - 1, j});
+            queue.push(new int[]{i + 1, j});
+        }
+
+        if(i = 0){
+            queue.push(new int[]{i + 1, j});
+        }
+
+        if(i == row_lenght - 1){
+            queue.push(new int[]{i - 1, j});
+        }
+
+        if(j > 0 && j < col_length - 1){
+            queue.push(new int[]{i, j - 1});
+            queue.push(new int[]{i , j + 1});
+        }
+
+
+        if(j = 0){
+            queue.push(new int[]{i, j + 1});
+        }
+
+        if(j == col_length - 1){
+            queue.push(new int[]{i, j - 1});
+        }
+        
+
+    }
+
+    public int orangesRotting(int[][] grid) {
+        Queue<Integer[]> queue = new LinkedList<>();
+        getRottenOrange(grid, queue);
+
+        int count = 0;
+        Map<Integer, Integer> visited = new HashMap<>();
+        while(!queue.isEmpty()){
+            int temp_count = queue_count;
+            queue_count = 0;
+            while(temp_count > 0){
+                int[] rotten = queue.pop();
+                visited.add(rotten);
+                putAdjacent(rotten, visited, count);
+                temp_count--;
+            }
+            count++;
+        }
+
+
+    }
+}
+
+----------------------------------------------------------------------------
+
+class Solution {
+
+    int queue_count = 0; //since we have added the rotten orange
+    int row_length = 0;
+    int col_length = 0;
+
+    public void getRottenOrange(int[][] arr, Queue<Integer[]>){
+        row_length = arr.length();
+        col_length = arr[0].length();
+
+        for(int i = 0; i < row_length; i++){
+            for(int j = 0; j < col_length; j++){
+                if(arr[i][j] == 2){
+                    queue.push(new int[]{i, j});
+                    queue_count++;
+                }
+            }
+        }
+    }
+
+    public void putVisited(int[] rotten, Map<Integer, Integer> track, int count){
+        int i = rotten[0];
+        int j = rotten[1];
+
+        if(i > 0 && i < row_length - 1){
+            if(!track.containsKey(i - 1)){
+                if(track.get(i - 1) != j){
+                    queue.push(new int[]{i - 1, j});
+                    track.put(i - 1, j);
+                }
+            }
+
+            if(!track.containsKey(i + 1)){
+                if(track.get(i + 1) != j){
+                    queue.push(new int[]{i + 1, j});
+                    track.put(i + 1, j);
+                }
+            }
+            queue_count += 2;
+        }
+
+        if(i = 0){
+            if(!track.containsKey(i + 1){
+                if(track.get(i + 1) != j){
+                    queue.push(new int[]{i + 1, j});
+                    track.put(i + 1, j);
+                }
+            })
+
+            queue_count++;
+        }
+
+        if(i == row_lenght - 1){
+             if(!track.containsKey(i - 1){
+                if(track.get(i - 1) != j){
+                    queue.push(new int[]{i - 1, j});
+                    track.put(i - 1, j);
+                }
+            })
+
+            queue_count++;
+        }
+
+        if(j > 0 && j < col_length - 1){
+            if(!track.containsKey(j + 1){
+                if(track.get(j + 1) != i){
+                    queue.push(new int[]{i , j + 1});
+                }
+            
+            }
+
+            if(!track.containsKey(j - 1){
+                if(track.get(j - 1) != i){
+                    queue.push(new int[]{i, j - 1});
+                }
+            
+            }
+            queue_count += 2;
+        }
+
+        if(j = 0){
+            if(!track.containsKey(j + 1){
+                if(track.get(j + 1) != i){
+                    queue.push(new int[]{i, j + 1});
+                }
+            
+            }
+           queue_count++;
+        }
+
+        if(j == col_length - 1){
+            if(!track.containsKey(j + 1){
+                if(track.get(j + 1) != i){
+                    queue.push(new int[]{i, j + 1});
+                }
+            
+            }
+            queue_count++;
+        }
+        
+    }
+
+    public int orangesRotting(int[][] grid) {
+        Queue<Integer[]> queue = new LinkedList<>();
+        getRottenOrange(grid, queue);
+
+        int count = 0;
+        Map<Integer, Integer> visited = new HashMap<>();
+        while (!queue.isEmpty()) {
+            int temp_count = queue_count;
+            queue_count = 0;
+            while (temp_count > 0) {
+                int[] rotten = queue.pop();
+                visited.add(rotten);
+                putAdjacent(rotten, visited, count);
+                temp_count--;
+            }
+            count++;
+        }
+    }
+}
+
+
+-----------------------------------------------------------------------
+
+class Solution {
+
+    int queue_count = 0; // since we have added the rotten orange
+    int row_length = 0;
+    int col_length = 0;
+
+    public void getRottenOrange(int[][] arr, Queue<int[]> queue) {
+        row_length = arr.length;
+        col_length = arr[0].length;
+
+        for (int i = 0; i < row_length; i++) {
+            for (int j = 0; j < col_length; j++) {
+                if (arr[i][j] == 2) {
+                    queue.add(new int[] { i, j });
+                    queue_count++;
+                }
+            }
+        }
+    }
+
+    public void putVisited(int[] rotten, Map<Integer, Integer> track, int count, Queue<int[]> queue) {
+        int i = rotten[0];
+        int j = rotten[1];
+
+        if (i > 0 && i < row_length - 1) {
+            if (!track.containsKey(i - 1)) { //if this is true, then key is not present
+                if (track.get(i - 1) != j) {	//if the key is not present, how will i be getting the value the key which is not even present
+                    queue.add(new int[] { i - 1, j });
+                    track.put(i - 1, j);
+                }
+            }
+
+            if (!track.containsKey(i + 1)) {
+                if (track.get(i + 1) != j) {
+                    queue.add(new int[] { i + 1, j });
+                    track.put(i + 1, j);
+                }
+            }
+            queue_count += 2;
+        }
+
+        if (i == 0) {
+            if (!track.containsKey(i + 1)) {
+                if (track.get(i + 1) != j) {
+                    queue.add(new int[] { i + 1, j });
+                    track.put(i + 1, j);
+                }
+            }
+
+            queue_count++;
+        }
+
+        if (i == row_length - 1) {
+            if (!track.containsKey(i - 1)) {
+                if (track.get(i - 1) != j) {
+                    queue.add(new int[] { i - 1, j });
+                    track.put(i - 1, j);
+                }
+            }
+
+            queue_count++;
+        }
+
+        if (j > 0 && j < col_length - 1) {
+            if (!track.containsKey(j + 1)) {
+                if (track.get(j + 1) != i) {
+                    queue.add(new int[] { i, j + 1 });
+                }
+            }
+
+            if (!track.containsKey(j - 1)) {
+                if (track.get(j - 1) != i) {
+                    queue.add(new int[] { i, j - 1 });
+                }
+            }
+
+            queue_count += 2;
+        }
+
+        if (j == 0) {
+            if (!track.containsKey(j + 1)) {
+                if (track.get(j + 1) != i) {
+                    queue.add(new int[] { i, j + 1 });
+                }
+            }
+            queue_count++;
+        }
+
+        if (j == col_length - 1) {
+            if (!track.containsKey(j + 1)) {
+                if (track.get(j + 1) != i) {
+                    queue.add(new int[] { i, j + 1 });
+                }
+            }
+            queue_count++;
+        }
+    }
+
+    public int orangesRotting(int[][] grid) {
+        Queue<int[]> queue = new LinkedList<>();
+        getRottenOrange(grid, queue);
+
+        int count = 0;
+        Map<Integer, Integer> visited = new HashMap<>();
+
+        while (!queue.isEmpty()) {
+            int temp_count = queue_count;
+            queue_count = 0;
+
+            while (temp_count > 0) {
+                int[] rotten = queue.poll();
+
+                putVisited(rotten, visited, count, queue);
+                temp_count--;
+            }
+
+            count++;
+        }
+
+        return count;
+    }
+}
+
+------------------------------------------------------------------------
+
+class Solution {
+
+    int queue_count = 0; // since we have added the rotten orange
+    int row_length = 0;
+    int col_length = 0;
+
+    public void getRottenOrange(int[][] arr, Queue<int[]> queue) {
+        row_length = arr.length;
+        col_length = arr[0].length;
+
+        for (int i = 0; i < row_length; i++) {
+            for (int j = 0; j < col_length; j++) {
+                if (arr[i][j] == 2) {
+                    queue.add(new int[] { i, j });
+                    queue_count++; //the count here implecitly dictates affected in each stages/time
+                }
+            }
+        }
+    }
+
+    public void putVisited(int[] rotten, Map<Integer, Integer> track, int count, Queue<int[]> queue) {
+        //getting the vlues stored from the queue
+        int i = rotten[0];
+        int j = rotten[1];
+
+        if (i > 0 && i < row_length - 1) {
+            if (!track.containsKey(i - 1)) {
+                    queue.add(new int[] { i - 1, j });
+                    track.put(i - 1, j);
+            }
+
+            if (!track.containsKey(i + 1)) {
+                    queue.add(new int[] { i + 1, j });
+                    track.put(i + 1, j);
+            }
+            queue_count += 2;
+        }
+
+        if (i == 0) {
+            if (!track.containsKey(i + 1)) {
+                    queue.add(new int[] { i + 1, j });
+                    track.put(i + 1, j);
+            }
+
+            queue_count++;
+        }
+
+        if (i == row_length - 1) {
+            if (!track.containsKey(i - 1)) {
+                    queue.add(new int[] { i - 1, j });
+                    track.put(i - 1, j);
+            }
+
+            queue_count++;
+        }
+
+        if (j > 0 && j < col_length - 1) {
+            if (!track.containsKey(j + 1)) {
+                    queue.add(new int[] { i, j + 1 });
+            }
+
+            if (!track.containsKey(j - 1)) {
+                    queue.add(new int[] { i, j - 1 });
+                }
+            }
+
+            queue_count += 2;
+        }
+
+        if (j == 0) {
+            if (!track.containsKey(j + 1)) {
+                    queue.add(new int[] { i, j + 1 });
+            }
+            queue_count++;
+        }
+
+        if (j == col_length - 1) {
+            if (!track.containsKey(j + 1)) {
+                    queue.add(new int[] { i, j + 1 });
+            }
+            queue_count++;
+        }
+    }
+
+    public int orangesRotting(int[][] grid) {
+        Queue<int[]> queue = new LinkedList<>();
+        getRottenOrange(grid, queue);
+
+        int count = 0; //counting the stages
+        Map<Integer, Integer> visited = new HashMap<>();
+
+        while (!queue.isEmpty()) {
+            int temp_count = queue_count;
+            queue_count = 0; //note bug : this will get override when just visiting the
+            //poping the next element of the same time/stage
+
+            while (temp_count > 0) {
+                int[] rotten = queue.poll();
+
+                putVisited(rotten, visited, count, queue);
+                temp_count--;
+            }
+
+            count++;
+        }
+
+        return count;
+    }
+}
+
+----------------------------------------------------------------------
+
+class Solution {
+
+    int queue_count = 0; // since we have added the rotten orange
+    int row_length = 0;
+    int col_length = 0;
+
+    public void getRottenOrange(int[][] arr, Queue<int[]> queue) {
+        row_length = arr.length;
+        col_length = arr[0].length;
+
+        for (int i = 0; i < row_length; i++) {
+            for (int j = 0; j < col_length; j++) {
+                if (arr[i][j] == 2) {
+                    queue.add(new int[] { i, j });
+                    queue_count++; //the count here implecitly dictates affected in each stages/time
+                }
+            }
+        }
+    }
+
+    public void putVisited(int[] rotten, Map<Integer, Integer> track, int count, Queue<int[]> queue) {
+        //getting the vlues stored from the queue
+        int i = rotten[0];
+        int j = rotten[1];
+
+        if (i > 0 && i < row_length - 1) {
+            if (!track.containsKey(i - 1)) {
+                    queue.add(new int[] { i - 1, j });
+                    track.put(i - 1, j);
+            }
+
+            if (!track.containsKey(i + 1)) {
+                    queue.add(new int[] { i + 1, j });
+                    track.put(i + 1, j);
+            }
+            queue_count += 2;
+        }
+
+        if (i == 0) {
+            if (!track.containsKey(i + 1)) {
+                    queue.add(new int[] { i + 1, j });
+                    track.put(i + 1, j);
+            }
+
+            queue_count++;
+        }
+
+        if (i == row_length - 1) {
+            if (!track.containsKey(i - 1)) {
+                    queue.add(new int[] { i - 1, j });
+                    track.put(i - 1, j);
+            }
+
+            queue_count++;
+        }
+
+        if (j > 0 && j < col_length - 1) {
+            if (!track.containsKey(j + 1)) {
+                    queue.add(new int[] { i, j + 1 });
+            }
+
+            if (!track.containsKey(j - 1)) {
+                    queue.add(new int[] { i, j - 1 });
+                }
+            }
+
+            queue_count += 2;
+        }
+
+        if (j == 0) {
+            if (!track.containsKey(j + 1)) {
+                    queue.add(new int[] { i, j + 1 });
+            }
+            queue_count++;
+        }
+
+        if (j == col_length - 1) {
+            if (!track.containsKey(j + 1)) {
+                    queue.add(new int[] { i, j + 1 });
+            }
+            queue_count++;
+        }
+    }
+
+    public int orangesRotting(int[][] grid) {
+        Queue<int[]> queue = new LinkedList<>();
+        getRottenOrange(grid, queue);
+
+        int count = 0; //counting the stages
+        Map<Integer, Integer> visited = new HashMap<>();
+
+        while (!queue.isEmpty()) {
+            int temp_count = queue_count;
+            queue_count = 0; //note bug : this will get override when just
+            //poping the next element of the same time/stage
+
+            while (temp_count > 0) {
+                int[] rotten = queue.poll();
+
+                putVisited(rotten, visited, count, queue);
+                temp_count--;
+            }
+
+            count++;
+        }
+
+        return count;
+    }
+}
+
+
+--------------------------------------------------------------------------------
+
+class Solution {
+
+    int queue_count = 0; // since we have added the rotten orange
+    int row_length = 0;
+    int col_length = 0;
+
+    public void getRottenOrange(int[][] arr, Queue<int[]> queue) {
+        row_length = arr.length;
+        col_length = arr[0].length;
+
+        for (int i = 0; i < row_length; i++) {
+            for (int j = 0; j < col_length; j++) {
+                if (arr[i][j] == 2) {
+                    queue.add(new int[] { i, j });
+                    queue_count++; //the count here implecitly dictates affected in each stages/time
+                }
+            }
+        }
+    }
+
+    public void putVisited(int[] rotten, Map<Integer, Integer> track, int count, Queue<int[]> queue) {
+        //getting the vlues stored from the queue
+
+        /*what dies this method do?
+        if keep tracks of visited elements and maintains the elements in particular stage
+        for next set of time/iteration/count
+        */
+
+        int i = rotten[0];
+        int j = rotten[1];
+
+        //condtions to check only valid positions.
+        if (i > 0 && i < row_length - 1) {
+            //these like conditoin only assessing only one co-ordinate, and missing the another
+            if (!track.containsKey(i - 1)) {
+                    queue.add(new int[] { i - 1, j });
+                    track.put(i - 1, j);
+            }
+
+            if (!track.containsKey(i + 1)) {
+                    queue.add(new int[] { i + 1, j });
+                    track.put(i + 1, j);
+            }
+            queue_count += 2;
+        }
+
+        if (i == 0) {
+            if (!track.containsKey(i + 1)) {
+                    queue.add(new int[] { i + 1, j });
+                    track.put(i + 1, j);
+            }
+
+            queue_count++;
+        }
+
+        if (i == row_length - 1) {
+            if (!track.containsKey(i - 1)) {
+                    queue.add(new int[] { i - 1, j });
+                    track.put(i - 1, j);
+            }
+
+            queue_count++;
+        }
+
+        if (j > 0 && j < col_length - 1) {
+            if (!track.containsKey(j + 1)) {
+                    queue.add(new int[] { i, j + 1 });
+            }
+
+            if (!track.containsKey(j - 1)) {
+                    queue.add(new int[] { i, j - 1 });
+                }
+            }
+
+            queue_count += 2;
+        }
+
+        if (j == 0) {
+            if (!track.containsKey(j + 1)) {
+                    queue.add(new int[] { i, j + 1 });
+            }
+            queue_count++;
+        }
+
+        if (j == col_length - 1) {
+            if (!track.containsKey(j + 1)) {
+                    queue.add(new int[] { i, j + 1 });
+            }
+            queue_count++;
+        }
+    }
+
+    public int orangesRotting(int[][] grid) {
+        Queue<int[]> queue = new LinkedList<>();
+        getRottenOrange(grid, queue);
+
+        int count = 0; //counting the stages
+        Map<Integer, Integer> visited = new HashMap<>();
+
+        while (!queue.isEmpty()) {
+            int temp_count = queue_count;
+            queue_count = 0; //note bug : this will get override when just
+            //poping the next element of the same time/stage
+            //but wait, that is handled by the loop below
+
+            while (temp_count > 0) {
+                int[] rotten = queue.poll();
+
+                putVisited(rotten, visited, count, queue);
+                temp_count--;
+            }
+
+            count++;
+        }
+
+        return count;
+    }
+}
+
+
+----------------------------------------------------------------------------------
+
+class Solution {
+
+    int queue_count = 0; // since we have added the rotten orange
+    int row_length = 0;
+    int col_length = 0;
+
+    public void getRottenOrange(int[][] arr, Queue<int[]> queue) {
+        row_length = arr.length;
+        col_length = arr[0].length;
+
+        for (int i = 0; i < row_length; i++) {
+            for (int j = 0; j < col_length; j++) {
+                if (arr[i][j] == 2) {
+                    queue.add(new int[] { i, j });
+                    queue_count++; //the count here implecitly dictates affected in each stages/time
+                }
+            }
+        }
+    }
+
+    public void putVisited(int[] rotten, Map<Integer, Integer> track, int count, Queue<int[]> queue) {
+        //getting the vlues stored from the queue
+
+        /*what dies this method do?
+        if keep tracks of visited elements and maintains the elements in particular stage
+        for next set of time/iteration/count
+        */
+
+        int i = rotten[0];
+        int j = rotten[1];
+
+        //condtions to check only valid positions.
+        if (i > 0 && i < row_length - 1) {
+            //these like conditoin only assessing only one co-ordinate, and missing the another
+
+            //let's change the approach
+            if(!(track.containsKey(i - 1) && track.getKey(i - 1) == j)){
+               queue.add(new int[] { i - 1, j });
+                    track.put(i - 1, j);
+            }
+         
+            if(!(track.containsKey(i + 1) && track.getKey(i + 1) == j)){
+               queue.add(new int[] { i + 1, j });
+                    track.put(i + 1, j);
+            }
+  
+            queue_count += 2;
+        }
+
+        if (i == 0) {
+                if(!(track.containsKey(i + 1) && track.getKey(i + 1) == j)){
+                    queue.add(new int[] { i + 1, j });
+                    track.put(i + 1, j);
+            }
+         
+            queue_count++;
+        }
+
+        if (i == row_length - 1) {
+            if (!(track.containsKey(i - 1) && track.getKey(i - 1) == j)) {
+                    queue.add(new int[] { i - 1, j });
+                    track.put(i - 1, j);
+            }
+
+            queue_count++;
+        }
+
+        if (j > 0 && j < col_length - 1) {
+            if (!(track.containsKey(j + 1) && track.getKey(j + 1) == i)) {
+                    queue.add(new int[] { i, j + 1 });
+            }
+
+            if (!(track.containsKey(j - 1) && track.getKey(j - 1) == i)) {
+                    queue.add(new int[] { i, j - 1 });
+                }
+            }
+
+            queue_count += 2;
+        }
+
+    if(j==0) {
+        if (!(track.containsKey(j + 1) && track.getKey(j + 1) == i)){
+            queue.add(new int[] { i, j + 1 });
+        }
+        queue_count++;
+    }
+
+    if(j==col_length-1)
+    {
+        if (!(track.containsKey(j + 1) && track.getKey(j + 1) == i)) {
+            queue.add(new int[] { i, j + 1 });
+        }
+        queue_count++;
+    }
+    }
+
+    public int orangesRotting(int[][] grid) {
+        Queue<int[]> queue = new LinkedList<>();
+        getRottenOrange(grid, queue);
+
+        int count = 0; //counting the stages
+        Map<Integer, Integer> visited = new HashMap<>();
+
+        while (!queue.isEmpty()) {
+            int temp_count = queue_count;
+            queue_count = 0; //note bug : this will get override when just
+            //poping the next element of the same time/stage
+            //but wait, that is handled by the loop below
+
+            while (temp_count > 0) {
+                int[] rotten = queue.poll();
+
+                putVisited(rotten, visited, count, queue);
+                temp_count--;
+            }
+
+            count++;
+        }
+
+        return count;
+    }
+}
+
+--------------------------------------------------------------------------------------
+
+class Solution {
+
+    int queue_count = 0; // since we have added the rotten orange
+    int row_length = 0;
+    int col_length = 0;
+
+    public void getRottenOrange(int[][] arr, Queue<int[]> queue) {
+        row_length = arr.length;
+        col_length = arr[0].length;
+
+        for (int i = 0; i < row_length; i++) {
+            for (int j = 0; j < col_length; j++) {
+                if (arr[i][j] == 2) {
+                    queue.add(new int[] { i, j });
+                    queue_count++; //the count here implecitly dictates affected in each stages/time
+                }
+            }
+        }
+    }
+
+    public void putVisited(int[] rotten, Map<Integer, Integer> track, int count, Queue<int[]> queue) {
+    //getting the vlues stored from the queue
+
+    /*what dies this method do?
+    if keep tracks of visited elements and maintains the elements in particular stage
+    for next set of time/iteration/count
+    */
+
+    int i = rotten[0];
+    int j = rotten[1];
+
+    //condtions to check only valid positions.
+    if (i > 0 && i < row_length - 1) {
+        //these like conditoin only assessing only one co-ordinate, and missing the another
+
+        //let's change the approach
+        if (!(track.containsKey(i - 1) && track.get(i - 1) == j)) {
+            queue.add(new int[] { i - 1, j });
+            track.put(i - 1, j);
+        }
+
+        if (!(track.containsKey(i + 1) && track.get(i + 1) == j)) {
+            queue.add(new int[] { i + 1, j });
+            track.put(i + 1, j);
+        }
+
+        queue_count += 2;
+    }
+
+    if (i == 0) {
+        if (!(track.containsKey(i + 1) && track.get(i + 1) == j)) {
+            queue.add(new int[] { i + 1, j });
+            track.put(i + 1, j);
+        }
+
+        queue_count++;
+    }
+
+    if (i == row_length - 1) {
+        if (!(track.containsKey(i - 1) && track.get(i - 1) == j)) {
+            queue.add(new int[] { i - 1, j });
+            track.put(i - 1, j);
+        }
+
+        queue_count++;
+    }
+
+    if (j > 0 && j < col_length - 1) {
+        if (!(track.containsKey(j + 1) && track.get(j + 1) == i)) {
+            queue.add(new int[] { i, j + 1 });
+        }
+
+        if (!(track.containsKey(j - 1) && track.get(j - 1) == i)) {
+            queue.add(new int[] { i, j - 1 });
+        }
+
+        queue_count += 2;
+    }
+
+    if (j == 0) {
+        if (!(track.containsKey(j + 1) && track.get(j + 1) == i)) {
+            queue.add(new int[] { i, j + 1 });
+        }
+        queue_count++;
+    }
+
+    if (j == col_length - 1) {
+        if (!(track.containsKey(j + 1) && track.get(j + 1) == i)) {
+            queue.add(new int[] { i, j + 1 });
+        }
+        queue_count++;
+    }
+}
+
+
+    public int orangesRotting(int[][] grid) {
+        Queue<int[]> queue = new LinkedList<>();
+        getRottenOrange(grid, queue);
+
+        int count = 0; //counting the stages
+        Map<Integer, Integer> visited = new HashMap<>();
+
+        while (!queue.isEmpty()) {
+            int temp_count = queue_count;
+            queue_count = 0; //note bug : this will get override when just
+            //poping the next element of the same time/stage
+            //but wait, that is handled by the loop below
+
+            while (temp_count > 0) {
+                int[] rotten = queue.poll();
+
+                putVisited(rotten, visited, count, queue);
+                temp_count--;
+            }
+
+            count++;
+        }
+
+        return count;
+    }
+}
+
+----------------------------------------------------------------------------------
+
+class Solution {
+
+    int queue_count = 0; // since we have added the rotten orange
+    int row_length = 0;
+    int col_length = 0;
+
+    public void getRottenOrange(int[][] arr, Queue<int[]> queue) {
+        row_length = arr.length;
+        col_length = arr[0].length;
+
+        for (int i = 0; i < row_length; i++) {
+            for (int j = 0; j < col_length; j++) {
+                if (arr[i][j] == 2) {
+                    queue.add(new int[] { i, j });
+                    queue_count++; //the count here implecitly dictates affected in each stages/time
+                }
+            }
+        }
+    }
+
+    public void putVisited(int[] rotten, Map<Integer, Integer> track, int count, Queue<int[]> queue) {
+    //getting the vlues stored from the queue
+
+    /*what dies this method do?
+    if keep tracks of visited elements and maintains the elements in particular stage
+    for next set of time/iteration/count
+    */
+
+    int i = rotten[0];
+    int j = rotten[1];
+
+    //condtions to check only valid positions.
+    if (i > 0 && i < row_length - 1) {
+        //these like conditoin only assessing only one co-ordinate, and missing the another
+
+        //let's change the approach
+        if (!(track.containsKey(i - 1) && track.get(i - 1) == j)) {
+            queue.add(new int[] { i - 1, j });
+            track.put(i - 1, j);
+
+            queue_count++;
+        }
+
+        if (!(track.containsKey(i + 1) && track.get(i + 1) == j)) {
+            queue.add(new int[] { i + 1, j });
+            track.put(i + 1, j);
+            queue_count++;
+        }
+
+    }
+
+    if (i == 0) {
+        if (!(track.containsKey(i + 1) && track.get(i + 1) == j)) {
+            queue.add(new int[] { i + 1, j });
+            track.put(i + 1, j);
+        }
+
+        queue_count++;
+    }
+
+    if (i == row_length - 1) {
+        if (!(track.containsKey(i - 1) && track.get(i - 1) == j)) {
+            queue.add(new int[] { i - 1, j });
+            track.put(i - 1, j);
+        }
+
+        queue_count++;
+    }
+
+    if (j > 0 && j < col_length - 1) {
+        if (!(track.containsKey(j + 1) && track.get(j + 1) == i)) {
+            queue.add(new int[] { i, j + 1 });
+            queue_count++;
+        }
+
+        if (!(track.containsKey(j - 1) && track.get(j - 1) == i)) {
+            queue.add(new int[] { i, j - 1 });
+            queue_count++;
+        }
+
+    }
+
+    if (j == 0) {
+        if (!(track.containsKey(j + 1) && track.get(j + 1) == i)) {
+            queue.add(new int[] { i, j + 1 });
+        }
+        queue_count++;
+    }
+
+    if (j == col_length - 1) {
+        if (!(track.containsKey(j + 1) && track.get(j + 1) == i)) {
+            queue.add(new int[] { i, j + 1 });
+        }
+        queue_count++;
+    }
+}
+
+
+    public int orangesRotting(int[][] grid) {
+        Queue<int[]> queue = new LinkedList<>();
+        getRottenOrange(grid, queue);
+
+        int count = 0; //counting the stages
+        Map<Integer, Integer> visited = new HashMap<>();
+
+        while (!queue.isEmpty()) {
+            int temp_count = queue_count;
+            queue_count = 0; //note bug : this will get override when just
+            //poping the next element of the same time/stage
+            //but wait, that is handled by the loop below
+            
+
+            /*After time exceeding error, i am wonder where is this reason causing the issue
+             when the queue is not empty and and temp by any chance temp_count is less than 0. Yup that is the reason, i tested using a snipped in the below
+            */
+            while (temp_count > 0) {
+                int[] rotten = queue.poll();
+
+                putVisited(rotten, visited, count, queue);
+                temp_count--;
+            }
+
+            //if(temp_count <= 0) return count; //only for testing
+
+            count++;
+        }
+
+        return count;
+    }
+}
+
+
+------------------------------------------------------------------------------------
+
