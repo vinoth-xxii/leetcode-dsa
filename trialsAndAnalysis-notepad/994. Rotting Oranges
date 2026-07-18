@@ -1305,3 +1305,126 @@ class Solution {
         return count;
     }
 }
+
+
+----------------------------------------------------------------------- (This isn't working. There are causing boundey issue For eg : grid = [[0,2]]
+
+import java.util.*;
+
+class Solution {
+
+    int queue_count = 0;
+    int row_length = 0;
+    int col_length = 0;
+
+    public void getRottenOrange(int[][] arr, Queue<int[]> queue, Set<String> visited) {
+        row_length = arr.length;
+        col_length = arr[0].length;
+        
+        for (int i = 0; i < row_length; i++) {
+            for (int j = 0; j < col_length; j++) {
+                if (arr[i][j] == 2) {
+                    queue.add(new int[] { i, j });
+                    visited.add(i + "," + j);
+                    queue_count++;
+                }
+            }
+        }
+    }
+
+    public void putVisited(int[] rotten, Set<String> track, int count, Queue<int[]> queue) {
+
+        int i = rotten[0];
+        int j = rotten[1];
+
+        if (i > 0 && i < row_length - 1) {
+
+            if (!track.contains((i - 1) + "," + j)) {
+                queue.add(new int[] { i - 1, j });
+                track.add((i - 1) + "," + j);
+                queue_count++;
+            }
+
+            if (!track.contains((i + 1) + "," + j)) {
+                queue.add(new int[] { i + 1, j });
+                track.add((i + 1) + "," + j);
+                queue_count++;
+            }
+        }
+
+        if (i == 0) {
+            if (!track.contains((i + 1) + "," + j)) {
+                queue.add(new int[] { i + 1, j });
+                track.add((i + 1) + "," + j);
+                queue_count++;
+            }
+        }
+
+        if (i == row_length - 1) {
+            if (!track.contains((i - 1) + "," + j)) {
+                queue.add(new int[] { i - 1, j });
+                track.add((i - 1) + "," + j);
+                queue_count++;
+            }
+        }
+
+        if (j > 0 && j < col_length - 1) {
+
+            if (!track.contains(i + "," + (j + 1))) {
+                queue.add(new int[] { i, j + 1 });
+                track.add(i + "," + (j + 1));
+                queue_count++;
+            }
+
+            if (!track.contains(i + "," + (j - 1))) {
+                queue.add(new int[] { i, j - 1 });
+                track.add(i + "," + (j - 1));
+                queue_count++;
+            }
+        }
+
+        if (j == 0) {
+            if (!track.contains(i + "," + (j + 1))) {
+                queue.add(new int[] { i, j + 1 });
+                track.add(i + "," + (j + 1));
+                queue_count++;
+            }
+        }
+
+        if (j == col_length - 1) {
+            if (!track.contains(i + "," + (j - 1))) {
+                queue.add(new int[] { i, j - 1 });
+                track.add(i + "," + (j - 1));
+                queue_count++;
+            }
+        }
+    }
+
+    public int orangesRotting(int[][] grid) {
+        Queue<int[]> queue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+
+        getRottenOrange(grid, queue, visited);
+
+        int count = 0;
+
+        while (!queue.isEmpty()) {
+
+            int temp_count = queue_count;
+            queue_count = 0;
+
+            while (temp_count > 0) {
+                int[] rotten = queue.poll();
+
+                putVisited(rotten, visited, count, queue);
+                temp_count--;
+            }
+
+            count++;
+        }
+
+        return count;
+    }
+}
+
+-----------------------------------------------------------
