@@ -1165,3 +1165,143 @@ class Solution {
 
 ------------------------------------------------------------------------------------
 
+class Solution {
+
+    int queue_count = 0; // since we have added the rotten orange
+    int row_length = 0;
+    int col_length = 0;
+
+    public void getRottenOrange(int[][] arr, Queue<int[]> queue) {
+        row_length = arr.length;
+        col_length = arr[0].length;
+
+        for (int i = 0; i < row_length; i++) {
+            for (int j = 0; j < col_length; j++) {
+                if (arr[i][j] == 2) {
+                    queue.add(new int[] { i, j });
+                    queue_count++; //the count here implecitly dictates affected in each stages/time
+                }
+            }
+        }
+    }
+
+    public void putVisited(int[] rotten, Map<Integer, Integer> track, int count, Queue<int[]> queue) {
+    //getting the vlues stored from the queue
+
+    /*what dies this method do?
+    if keep tracks of visited elements and maintains the elements in particular stage
+    for next set of time/iteration/count
+    */
+
+    int i = rotten[0];
+    int j = rotten[1];
+
+    //condtions to check only valid positions.
+    if (i > 0 && i < row_length - 1) {
+        //these like conditoin only assessing only one co-ordinate, and missing the another
+
+        //let's change the approach
+        if (!(track.containsKey(i - 1) && track.get(i - 1) == j)) {
+            queue.add(new int[] { i - 1, j });
+            track.put(i - 1, j);
+            queue_count++;
+        }
+
+        if (!(track.containsKey(i + 1) && track.get(i + 1) == j)) {
+            queue.add(new int[] { i + 1, j });
+            track.put(i + 1, j);
+            queue_count++;
+        }
+
+    }
+
+    if (i == 0) {
+        if (!(track.containsKey(i + 1) && track.get(i + 1) == j)) {
+            queue.add(new int[] { i + 1, j });
+            track.put(i + 1, j);
+            queue_count++;
+        }
+        /* putting inside the if statement
+        queue_count++;
+        */
+    }
+
+    if (i == row_length - 1) {
+        if (!(track.containsKey(i - 1) && track.get(i - 1) == j)) {
+            queue.add(new int[] { i - 1, j });
+            track.put(i - 1, j);
+            queue_count++;
+        }
+    }
+
+    if (j > 0 && j < col_length - 1) {
+        //had issue here (track.containsKey(j + 1) && track.get(j + 1) == i)
+        if (!(track.containsKey(i) && track.get(i) == j + 1)) {
+            queue.add(new int[] { i, j + 1 });
+            queue_count++;
+        }
+
+        //had issue here (track.containsKey(j - 1) && track.get(j - 1) == i)
+        if (!(track.containsKey(i) && track.get(i) == j - 1)) {
+            queue.add(new int[] { i, j - 1 });
+            queue_count++;
+        }
+
+    }
+
+    if (j == 0) {
+        //had issue here track.containsKey(j + 1) && track.get(j + 1) == i)
+        if (!(track.containsKey(i) && track.get(i) == j + 1)) { 
+            queue.add(new int[] { i, j + 1 });
+            queue_count++;
+        }
+        /* putting inside the if statement
+        queue_count++;
+        */
+    }
+
+    if (j == col_length - 1) {
+        //had issue here (track.containsKey(j + 1) && track.get(j + 1) == i)
+        if (!(track.containsKey(i) && track.get(i) == j + 1)) {
+            queue.add(new int[] { i, j + 1 });
+            queue_count++;
+        }
+        /* putting inside the if statement
+        queue_count++;
+        */
+    }
+}
+
+
+    public int orangesRotting(int[][] grid) {
+        Queue<int[]> queue = new LinkedList<>();
+        getRottenOrange(grid, queue);
+
+        int count = 0; //counting the stages
+        Map<Integer, Integer> visited = new HashMap<>();
+
+        while (!queue.isEmpty()) {
+            int temp_count = queue_count;
+            queue_count = 0; //note bug : this will get override when just
+            //poping the next element of the same time/stage
+            //but wait, that is handled by the loop below
+            
+
+            /*After time exceeding error, i am wonder where is this reason causing the issue
+             when the queue is not empty and and temp by any chance temp_count is less than 0. Yup that is the reason, i tested using a snipped in the below
+            */
+            while (temp_count > 0) {
+                int[] rotten = queue.poll();
+
+                putVisited(rotten, visited, count, queue);
+                temp_count--;
+            }
+
+            //if(temp_count <= 0) return count; //only for testing
+
+            count++;
+        }
+
+        return count;
+    }
+}
