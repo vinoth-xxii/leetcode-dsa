@@ -1,0 +1,88 @@
+class Solution {
+    
+    public void storeOnesPlaces(Queue<Integer[]> queue, int[][] mat){
+        for(int i = 0; i < mat.length; i++){
+            for(int j = 0; j < mat[0].length; j++){
+                if(mat[i][j] == 1) queue.push(new int[i][j]);
+            }
+        }
+    }
+
+    public int getNearestZero(int[] current, int[][] mat){
+        int count = 0;
+        
+
+
+
+        return count;
+    }
+
+    public int[][] updateMatrix(int[][] mat) {
+        Queue<Integer[]> addressOfOnes = new LinkedList<>();
+        storeOnesPlaces(addressOfOnes, mat);
+
+        Queue<Integer[]> visitingAdjacent = new LinkedList<>();
+        while(!adressOfOnes.isEmpty()){
+            int[] current = adressOfOnes.poll();
+            mat[current[0]][current[i]] = getNearestZero(current, mat);
+        }
+    }
+}
+
+----------------------------------------------------------------------------------
+
+class Solution {
+    
+    public void storeOnesPlaces(Queue<Integer[]> queue, int[][] mat){
+        for(int i = 0; i < mat.length; i++){
+            for(int j = 0; j < mat[0].length; j++){
+                if(mat[i][j] == 1) queue.push(new int[i][j]);
+            }
+        }
+    }
+
+    public int getNearestZero(int[] current, int[][] mat){
+        int count = 0;
+        int i = current[0];
+        int j = current[1];
+
+        if(i + 1 < mat.length){
+            if(mat[i + 1][j] == 0){
+                return count;
+            }
+        }
+
+        if(i - 1 >= 0){
+            if(mat[i - 1][j] == 0){
+                return count;
+            }
+        }
+
+        if(j + 1 < mat[0].length){
+            if(mat[i][j + 1] == 0){
+                return count;
+            }
+        }
+
+        if(j - 1 >= 0){
+            if(mat[i][j - 1] == 0){
+                return count;
+            }
+        }
+
+        return count;
+    }
+
+    public int[][] updateMatrix(int[][] mat) {
+        Queue<Integer[]> addressOfOnes = new LinkedList<>();
+        storeOnesPlaces(addressOfOnes, mat);
+
+        Queue<Integer[]> visitingAdjacent = new LinkedList<>();
+        while(!adressOfOnes.isEmpty()){
+            int[] current = adressOfOnes.poll();
+            mat[current[0]][current[i]] = getNearestZero(current, mat);
+        }
+    }
+}
+
+--------------------------------------------------------------------------
