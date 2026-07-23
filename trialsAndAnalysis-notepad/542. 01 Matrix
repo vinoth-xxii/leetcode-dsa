@@ -86,3 +86,342 @@ class Solution {
 }
 
 --------------------------------------------------------------------------
+
+class Solution {
+
+    public void storeOnesPlaces(Queue<Integer[]> queue, int[][] mat) {
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[0].length; j++) {
+                if (mat[i][j] == 1)
+                    queue.push(new int[i][j]);
+            }
+        }
+    }
+
+    public int getNearestZero(int[] current, int[][] mat) {
+        int count = 0;
+        int i = current[0];
+        int j = current[1];
+
+        Queue<Integer[]> visitingAdjacent = new LinkedList<>();
+
+       while() 
+        if (i + 1 < mat.length) { //it's a valid address
+            if (mat[i + 1][j] == 0) {
+                return count;
+            } else {
+                visitingAdjacent.add(new int[] { i + 1, j });
+            }
+        }
+
+        if (i - 1 >= 0) {
+            if (mat[i - 1][j] == 0) {
+                return count;
+            } else {
+                visitingAdjacent.add(new int[] { i - 1, j });
+            }
+        }
+
+        if (j + 1 < mat[0].length) {
+            if (mat[i][j + 1] == 0) {
+                return count;
+            } else {
+                visitingAdjacent.add(new int[] { i, j + 1 });
+            }
+        }
+
+        if (j - 1 >= 0) {
+            if (mat[i][j - 1] == 0) {
+                return count;
+            } else {
+                visitingAdjacent.add(new int[] { i, j - 1 });
+            }
+        }
+
+        return count;
+    }
+
+    public int[][] updateMatrix(int[][] mat) {
+        Queue<Integer[]> addressOfOnes = new LinkedList<>();
+        storeOnesPlaces(addressOfOnes, mat);
+
+        while (!adressOfOnes.isEmpty()) {
+            int[] current = adressOfOnes.poll();
+            mat[current[0]][current[i]] = getNearestZero(current, mat);
+        }
+    }
+}
+
+-----------------------------------------------------------------------------
+
+class Solution {
+
+    public void storeOnesPlaces(Queue<Integer[]> queue, int[][] mat) {
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[0].length; j++) {
+                if (mat[i][j] == 1)
+                    queue.push(new int[i][j]);
+            }
+        }
+    }
+
+    public int getNearestZero(Queue<Integer[]> adressOfOnes, int[][] mat) {
+        int result = 1;
+        int count_atStage = 0;
+        //i need to only about stages and no of elements added in each stage
+
+      
+       while(!visitingOfAdjacent.isEmpty()){
+            int[] current = visitingOfAdjacent.poll();
+            int i = current[0];
+            int j = current[1];
+
+            if (i + 1 < mat.length) { //it's a valid address
+                if (mat[i + 1][j] == 0) {
+                    return result;
+                } else {
+                    visitingAdjacent.add(new int[] { i + 1, j });
+                    count_atStage++;
+            }
+        }
+       }
+
+        if (i - 1 >= 0) {
+            if (mat[i - 1][j] == 0) {
+                return result;
+            } else {
+                visitingAdjacent.add(new int[] { i - 1, j });
+                count_atStage++;
+            }
+
+                
+            if (j + 1 < mat[0].length) {
+                if (mat[i][j + 1] == 0) {
+                    return result;
+                } else {
+                    visitingAdjacent.add(new int[] { i, j + 1 });
+                    count_atStage++;
+                }
+            }
+
+            if (j - 1 >= 0) {
+                if (mat[i][j - 1] == 0) {
+                    return result;
+                } else {
+                    visitingAdjacent.add(new int[] { i, j - 1 });
+                    count_atStage++;
+                }
+            }
+        }
+        result++;
+
+    }
+
+    public int[][] updateMatrix(int[][] mat) {
+        Queue<Integer[]> addressOfOnes = new LinkedList<>();
+        Queue<Integer[]> visitingAdjacent = new LinkedList<>();
+
+        storeOnesPlaces(addressOfOnes, mat);
+
+        while (!adressOfOnes.isEmpty()) {
+            visitingAdjacent.push(adressOfOnes.poll()); //i need to somehow start the loop
+            mat[current[0]][current[i]] = getNearestZero(adressOfOnes, visitingAdjacent, mat);
+            visitingAdjacent = new LinkedList<>();
+        }
+    }
+}
+
+--------------------------------------------------------------------------------------------------
+
+class Solution {
+
+    public void storeOnesPlaces(Queue<Integer[]> queue, int[][] mat) {
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[0].length; j++) {
+                if (mat[i][j] == 1)
+                    queue.push(new int[i][j]);
+            }
+        }
+    }
+
+    pubic void addingAdjacentElements(){
+        int[] current = visitingOfAdjacent.poll();
+        int i = current[0];
+        int j = current[1];
+
+        if (i + 1 < mat.length) { //it's a valid address
+            if (mat[i + 1][j] == 0) {
+                return stage;
+            } else {
+                visitingAdjacent.add(new int[] { i + 1, j });
+                count_atStage++;
+            }
+        }
+
+        if (i - 1 >= 0) {
+            if (mat[i - 1][j] == 0) {
+                    return stage;
+            } else {
+                visitingAdjacent.add(new int[] { i - 1, j });
+                count_atStage++;
+            }
+        }
+
+        if (j + 1 < mat[0].length) {
+            if (mat[i][j + 1] == 0) {
+                return stage;
+            } else {
+                visitingAdjacent.add(new int[] { i, j + 1 });
+                count_atStage++;
+            }
+        }
+
+        if (j - 1 >= 0) {
+            if (mat[i][j - 1] == 0) {
+                return stage;
+            } else {
+                visitingAdjacent.add(new int[] { i, j - 1 });
+                count_atStage++;
+            }
+        }
+
+    }
+
+    public int getNearestZero(Queue<Integer[]> adressOfOnes, int[][] mat) {
+        //the functions manages no.of.elements elements at each stage
+        //and do not worry about the new added elements interfering the searchs
+        //as per the queque dsa, we will pop elements with certail threshold only - count
+        //now i need to worry about count manipulation and storage
+        int stage = 1;
+        int size = 1;
+        int count_atStage = 1;
+        
+        while(!visitingAdjacent.isEmpty()){ //just for running the loop
+            count_atStage = visitingAdjacent.size();
+            while(count_atStage > 0){
+                addingAdjacentElements(size);
+                count_atStage--;
+            }
+            stage++;
+        }
+        //i need to only about stages and no of elements added in each stage
+        //and i belive it has to fixed somewhere
+    
+        stage++;
+
+    }
+
+    public int[][] updateMatrix(int[][] mat) {
+        Queue<Integer[]> addressOfOnes = new LinkedList<>();
+        Queue<Integer[]> visitingAdjacent = new LinkedList<>();
+
+        storeOnesPlaces(addressOfOnes, mat);
+
+        while (!adressOfOnes.isEmpty()) {
+            visitingAdjacent.push(adressOfOnes.poll()); //i need to somehow start the loop
+            mat[current[0]][current[i]] = getNearestZero(adressOfOnes, visitingAdjacent, mat);
+            visitingAdjacent = new LinkedList<>();
+        }
+    }
+}
+
+----------------------------------------------------------------------------------------------- Time Limit Exceeded 48 / 50 testcases passed
+class Solution {
+
+    public void storeOnesPlaces(Queue<int[]> queue, int[][] mat) {
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[0].length; j++) {
+                if (mat[i][j] == 1)
+                    queue.add(new int[]{ i , j });
+            }
+        }
+    }
+
+    public boolean addingAdjacentElements(Queue<int[]> visitingAdjacent, int[][] mat){
+        int[] current = visitingAdjacent.poll();
+        int i = current[0];
+        int j = current[1];
+
+        if (i + 1 < mat.length) { //it's a valid address
+            if (mat[i + 1][j] == 0) {
+                return true;
+            } else {
+                visitingAdjacent.add(new int[] { i + 1, j });
+            }
+        }
+
+        if (i - 1 >= 0) {
+            if (mat[i - 1][j] == 0) {
+                    return true;
+            } else {
+                visitingAdjacent.add(new int[] { i - 1, j });
+            }
+        }
+
+        if (j + 1 < mat[0].length) {
+            if (mat[i][j + 1] == 0) {
+                return true;
+            } else {
+                visitingAdjacent.add(new int[] { i, j + 1 });
+            }
+        }
+
+        if (j - 1 >= 0) {
+            if (mat[i][j - 1] == 0) {
+                return true;
+            } else {
+                visitingAdjacent.add(new int[] { i, j - 1 });
+            }
+        }
+
+        return false;
+
+    }
+
+    public int getNearestZero(Queue<int[]> visitingAdjacent, int[][] mat) {
+        //the functions manages no.of.elements elements at each stage
+        //and do not worry about the new added elements interfering the searchs
+        //as per the queque dsa, we will pop elements with certail threshold only - count
+        //now i need to worry about count manipulation and storage
+        //int stage = 1;
+		
+		int stage = 0;
+
+        while(!visitingAdjacent.isEmpty()){ //just for running the loop
+            int count_atStage = visitingAdjacent.size();
+            while(count_atStage > 0){
+                boolean isFound = addingAdjacentElements(visitingAdjacent, mat);
+                if(isFound){
+                    visitingAdjacent = new LinkedList<>();
+                    break;
+                }
+                count_atStage--;
+            }
+            stage++;
+        }
+        //i need to only about stages and no of elements added in each stage
+        //and i belive it has to fixed somewhere
+        return stage;
+
+    }
+
+    public int[][] updateMatrix(int[][] mat) {
+        Queue<int[]> addressOfOnes = new LinkedList<>();
+        int[][] result = new int[mat.length][mat[0].length];
+
+        storeOnesPlaces(addressOfOnes, mat);
+
+        while (!addressOfOnes.isEmpty()) {
+            Queue<int[]> visitingAdjacent = new LinkedList<>();
+            int[] current = addressOfOnes.peek();
+            int i = current[0];
+            int j = current[1];
+            visitingAdjacent.add(addressOfOnes.poll()); //i need to somehow start the loop
+
+
+            result[i][j] = getNearestZero(visitingAdjacent, mat);
+            visitingAdjacent = new LinkedList<>();
+        }
+        return result;
+    }
+}
