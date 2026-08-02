@@ -425,3 +425,124 @@ class Solution {
         return result;
     }
 }
+
+----------------------------------------------------------------------------------------------------------- Time Limit Exceeded 49 / 50 testcases passed
+
+class Solution {
+
+    public void storeOnesPlaces(Queue<int[]> queue, int[][] mat) {
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[0].length; j++) {
+                if (mat[i][j] == 1)
+                    queue.add(new int[]{ i , j });
+            }
+        }
+    }
+
+    public boolean addingAdjacentElements(Queue<int[]> visitingAdjacent, int[][] mat, Set<String> visited){
+        int[] current = visitingAdjacent.poll();
+        int i = current[0];
+        int j = current[1];
+
+        visited.add(i + "" + j);
+
+        if (i + 1 < mat.length) { //it's a valid address
+            if (mat[i + 1][j] == 0) {
+                return true;
+            } else{
+                if(!visited.contains((i + 1) + "" + j)){
+                    visitingAdjacent.add(new int[] { i + 1, j });
+                    visited.add((i + 1) + "" + j);
+                }
+            }
+        }
+
+        if (i - 1 >= 0) {
+            if (mat[i - 1][j] == 0) {
+                    return true;
+            } else {
+                if(!visited.contains((i - 1) + "" + j)){
+                    visitingAdjacent.add(new int[] { i - 1, j });
+                    visited.add((i - 1) + "" + j);
+                }
+                
+            }
+        }
+
+        if (j + 1 < mat[0].length) {
+            if (mat[i][j + 1] == 0) {
+                return true;
+            } else {
+                if(!visited.contains(i + "" + (j + 1))){
+                    visitingAdjacent.add(new int[] { i, j + 1 });
+                    visited.add(i + "" + (j + 1));
+                }
+                
+            }
+        }
+
+        if (j - 1 >= 0) {
+            if (mat[i][j - 1] == 0) {
+                return true;
+            } else {
+                if(!visited.contains(i + "" + (j - 1))){
+                    visitingAdjacent.add(new int[] { i, j - 1 });
+                    visited.add(i + "" + (j - 1));
+                }
+                
+            }
+        }
+
+        return false;
+
+    }
+
+    public int getNearestZero(Queue<int[]> visitingAdjacent, int[][] mat) {
+        //the functions manages no.of.elements elements at each stage
+        //and do not worry about the new added elements interfering the searchs
+        //as per the queque dsa, we will pop elements with certail threshold only - count
+        //now i need to worry about count manipulation and storage
+        int stage = 0;
+        Set<String> visited = new HashSet<>();
+
+        while(!visitingAdjacent.isEmpty()){ //just for running the loop
+            int count_atStage = visitingAdjacent.size();
+
+            while(count_atStage > 0){
+                boolean isFound = addingAdjacentElements(visitingAdjacent, mat, visited);
+                if(isFound){
+                    visitingAdjacent = new LinkedList<>();
+                    break;
+                }
+                count_atStage--;
+            }
+            stage++;
+        }
+        //i need to only about stages and no of elements added in each stage
+        //and i belive it has to fixed somewhere
+        visited = new HashSet<>();
+        return stage;
+    }
+
+    public int[][] updateMatrix(int[][] mat) {
+        Queue<int[]> addressOfOnes = new LinkedList<>();
+        int[][] result = new int[mat.length][mat[0].length];
+
+        storeOnesPlaces(addressOfOnes, mat);
+
+        while (!addressOfOnes.isEmpty()) {
+            Queue<int[]> visitingAdjacent = new LinkedList<>();
+            int[] current = addressOfOnes.peek();
+            int i = current[0];
+            int j = current[1];
+            visitingAdjacent.add(addressOfOnes.poll()); //i need to somehow start the loop
+
+
+            result[i][j] = getNearestZero(visitingAdjacent, mat);
+            visitingAdjacent = new LinkedList<>();
+        }
+        return result;
+    }
+}
+
+-------------------------------------------------------------------------------------------------------------------
