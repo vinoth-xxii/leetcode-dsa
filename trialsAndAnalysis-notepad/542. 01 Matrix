@@ -545,4 +545,34 @@ class Solution {
     }
 }
 
--------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------- (visiting after very long time)
+
+class Solution {
+
+    public getDistanceInMatrix(int[][] mat, int[] arr){
+        //since i have to visit all the possible adajacent i don't have to store visited elements
+        //just ensure when the matrix value is zero, then don't update the count of it.
+        //as it is a bfs i also need to keep track of element with the count
+
+        l_count = 0;
+
+    }
+
+    public int[][] updateMatrix(int[][] mat) {
+        //1st i will iterate over the matrix and keep track of 0s
+        Queue<int[]> zeros = new LinkedList<>();
+        for(int i = 0; i < mat.length; i++){
+            for(int j = 0; j < mat[0].length; j++){
+                if(mat[i][j] == 0){
+                    zeros.add(new int[]{mat[i][j]});
+                }
+            }
+        }
+
+        while(!zeros.isEmpty()){
+            int[] arr = zeros.poll();
+            getDistanceInMatrix(mat, arr);
+        }
+    }
+}
+
