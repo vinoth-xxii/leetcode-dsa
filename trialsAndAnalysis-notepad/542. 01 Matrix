@@ -576,3 +576,495 @@ class Solution {
     }
 }
 
+--------------------------------------------------------------------------------
+
+class Solution {
+    //at 1st i ll be taking the indices of the 1's and make them zero
+    //if you beleive doing so will affect the bfs, don't worry
+    //as we'll store the visited elements
+
+    public Queue<int[]> getOnesPlaces(int[][] mat, Set<String> visited){
+        int rowLen = mat.length;
+        int colLen = mat[0].length;
+        Queue<int[]> result = new LinkedList<>();
+        for(int i = 0; i < rowLen; i++){
+            for(int j = 0; j < colLen; j++){
+                if(mat[i][j] == 1){
+                    result.add(new int[]{i, j});
+                    visited.add(Integer.toString(i) + Integer.toString(j));
+                    mat[i][j] = 0;
+                }
+            }
+        }
+        return result;
+    }
+
+    public String getValue(int i, int j){
+        return Integer.toString(i) + Integer.toString(j);
+    }
+
+    public int[][] doBfs(int[] arr, int[][] mat){
+        Queue<int[]> queue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+
+        int level_count = 0;
+        //int no_of_elements_in_level = 0;
+        int no_of_elements_in_level = queue.size();
+        while(!queue.isEmpty()){
+            for(int k = 0; k < no_of_elements_in_level; k++){
+                int[] address = queue.poll();
+                int i = address[0];
+                int j = address[1];
+                //set the value to the corresponding level value
+                mat[i][j] = Math.min(mat[i][j], level_count);
+
+                //adding the adjacents in the queue for next level
+                //ie diagonal elements
+                //now the thing is adding the valid adjacent element
+                //i known there are 4 diagonal elements to be added
+                //anyway if either in i or j are negative then i that combination should be ignored
+                
+                //if(i - 1 >= 0 && i + 1 < mat[0].length && j - 1 >= 0 && j + 1 < mat.length)
+                //the above condition with be checking for [1,0], and when in the condition j - 1 = -1 which will fail and will fail to add other valid address like [0, 0], [2,0], [1, 1] all just because of on condition   [1, -1]
+                
+            
+                //North address
+                if(i - 1 >= 0 && visited.contains(getValue(i - 1, j))){
+                    queue.add(new int[]{i - 1, j});
+                    visited.add(getValue(i - 1, j));
+                }
+                //south address
+                if(i + 1 < mat[0].length && visited.contains(getValue(i + 1, j))){
+                    queue.add(new int[]{i + 1, j});
+                    visited.add(getValue(i + 1, j));
+                } 
+                //west address
+                if(j - 1 >= 0 && visited.contains(getValue(i, j - 1))){
+                    queue.add(new int[]{i, j - 1});
+                    visited.add(getValue(i, j - 1));
+                } 
+                //east address
+                if(j + 1 < mat.length && visited.contains(getValue(i, j + 1))){
+                    queue.add(new int[]{i, j + 1});
+                    visited.add(getValue(i, j + 1));
+                }
+            }
+            level_count++;
+        }
+    return mat;
+    }
+
+    public int[][] updateMatrix(int[][] mat) {
+        //1st lets store the indices of 1th elements
+        Queue<int[]> ones = new LinkedList<>();
+        Set<String> oncesPlaces = new HashSet<>();
+
+        ones = getOnesPlaces(mat, oncesPlaces);
+        //is oncesPlaces here, is pass by reference
+        //going to do bfs from the once we stored
+        //but looking at "Set<String> visited" i don't think so.
+        // int[][] resultMatrix = new int[mat.length][mat[0].length];
+        while(!ones.isEmpty()){
+            int[] value = ones.poll();
+            mat = doBfs(value, mat);
+        }
+
+        return mat;
+    }
+}
+
+--------------------------------------------------------------------------------------
+
+class Solution {
+
+    public String getValue(int i, int j){
+        return Integer.toString(i) + Integer.toString(j);
+    }
+
+    public int[][] getZerosPlaces(int[][] mat){
+
+        for(int i = 0; i <  mat.length; i++){
+            for(int j = 0; j < mat[0].length; j++){
+                if(mat[i][j] == 0){
+                    zerosPlaces.add(new int[]{i, j});
+                    visited.add(getValue(i, j));
+                }
+                else{
+                    mat[i][j] = Integer.MAX_VALUE;
+                }
+            }
+        }
+        return mat;
+    }
+
+
+    public int[][] doBfs(int[] arr, int[][] mat){
+
+        Queue<int[]> queue = new LinkedList<>();
+        int level_count = 1;
+        
+        queue.add(arr);
+
+        while(!queue.isEmpty()){
+            
+            int no_of_elements_in_level = queue.size();
+            
+            for(int k = 0; k < no_of_elements_in_level; k++){
+                int[] address = queue.poll();
+                int i = address[0];
+                int j = address[1];
+                mat[i][j] = Math.min(mat[i][j], level_count);
+                visited.add(getValue(i, j));
+               
+                i--;
+                if(i >= 0 && visited.contains(getValue(i, j))){
+                    mat[i][j] = Math.min(mat[i][j], level_count);
+                    queue.add(new int[]{i, j});
+                }
+                i++;
+
+                i++;
+                if(i < mat[0].length && visited.contains(getValue(i, j))){
+                    mat[i][j] = Math.min(mat[i][j], level_count);
+                    queue.add(new int[]{i, j});
+                    
+                }
+                i--;
+
+                j--;
+                if(j >= 0 && visited.contains(getValue(i, j))){
+                    mat[i][j] = Math.min(mat[i][j], level_count);
+                    queue.add(new int[]{i, j});
+                }
+                j++;
+
+                j++;
+                if(j < mat.length && visited.contains(getValue(i, j))){
+                    mat[i][j] = Math.min(mat[i][j], level_count);
+                    queue.add(new int[]{i, j});
+                }
+                j--;
+            }
+            level_count++;
+
+        }
+    return mat;
+    }
+
+
+    Set<String> visited = new HashSet<>();
+    Queue<int[]> zerosPlaces = new LinkedList<>();
+    public int[][] updateMatrix(int[][] mat) {
+
+        Queue<int[]> zeros = new LinkedList<>();
+        mat = getZerosPlaces(mat);
+
+        while(!zerosPlaces.isEmpty()){
+            int[] value = zeros.poll();
+            mat = doBfs(value, mat);
+        }
+
+        return mat;
+    }
+}
+
+------------------------------------------------------------------------------------------------------------------
+
+class Solution {
+
+    public Queue<int[]> getZerosPlaces(int[][] mat){
+
+        Queue<int[]> addressOfZeros = new LinkedList<>();
+
+        for(int i = 0; i <  mat.length; i++){
+            for(int j = 0; j < mat[0].length; j++){
+                if(mat[i][j] == 0){
+                    addressOfZeros.add(new int[]{i, j});
+                    zeros.add(getValue(i, j));
+                }
+            }
+        }
+        return addressOfZeros;
+    }
+
+    Set<String> visited;
+    public int[][] doBfs(int[] arr, int[][] mat){
+
+        Queue<int[]> queue = new LinkedList<>();
+        int level_count = 0; //1's woun't change to zero, here were are taking only from zeros
+        visited = new HashSet<>();
+        
+        queue.add(arr);
+
+        while(!queue.isEmpty()){
+            
+            int no_of_elements_in_level = queue.size();
+            
+            for(int k = 0; k < no_of_elements_in_level; k++){
+                int[] address = queue.poll();
+                int i = address[0];
+                int j = address[1];
+                mat[i][j] = Math.min(mat[i][j], level_count);
+                visited.add(getValue(i, j));
+                /* i could understand why visited is global for zeros
+                but what about the other elemts like the 1 in the 1st example
+                from zeros, all should visit and calculte the distace right
+                */
+               
+                i--;
+                if(i >= 0 && !zeros.contains(getValue(i, j)) && !visited.contains(getValue(i, j))){
+                    visited.add(getValue(i, j));
+                    queue.add(new int[]{i, j});
+                }
+                i++;
+
+                i++;
+                if(i < mat[0].length && !zeros.contains(getValue(i, j)) && !visited.contains(getValue(i, j))){
+                    visited.add(getValue(i, j));
+                    queue.add(new int[]{i, j});
+                    
+                }
+                i--;
+
+                j--;
+                if(j >= 0 && !zeros.contains(getValue(i, j)) && !visited.contains(getValue(i, j))){
+                    visited.add(getValue(i, j));
+                    queue.add(new int[]{i, j});
+                }
+                j++;
+
+                j++;
+                if(j < mat.length && !zeros.contains(getValue(i, j)) && !visited.contains(getValue(i, j))){
+                    visited.add(getValue(i, j));
+                    queue.add(new int[]{i, j});
+                }
+                j--;
+            }
+            level_count++;
+        }
+    return mat;
+    }
+
+
+    Set<String> zeros;
+
+    public int[][] updateMatrix(int[][] mat) {
+
+        Queue<int[]> zerosPlaces = new LinkedList<>();
+        zeros = new HashSet<>();
+
+        zerosPlaces = getZerosPlaces(mat);
+
+        while(!zerosPlaces.isEmpty()){
+            int[] value = zerosPlaces.poll();
+            mat = doBfs(value, mat);
+        }
+
+        return mat;
+    }
+
+    public String getValue(int i, int j){
+        return Integer.toString(i) + Integer.toString(j);
+    }
+}
+
+-------------------------------------------------------------------------------------------
+
+class Solution {
+
+    public int[][] getZerosPlaces(int[][] mat){
+
+        for(int i = 0; i <  mat.length; i++){
+            for(int j = 0; j < mat[0].length; j++){
+                if(mat[i][j] == 0){
+                    zerosPlaces.add(new int[]{i, j});
+                    zeros.add(getValue(i, j));
+                }
+                else{
+                    mat[i][j] = Integer.MAX_VALUE;
+                }
+            }
+        }
+        return mat;
+    }
+
+    Set<String> visited;
+    public int[][] doBfs(int[] arr, int[][] mat){
+
+        Queue<int[]> queue = new LinkedList<>();
+        int level_count = 0; //1's woun't change to zero, here were are taking only from zeros
+        visited = new HashSet<>();
+        
+        queue.add(arr);
+
+        while(!queue.isEmpty()){
+            
+            int no_of_elements_in_level = queue.size();
+            
+            for(int k = 0; k < no_of_elements_in_level; k++){
+                int[] address = queue.poll();
+
+                int i = address[0];
+                int j = address[1];
+                mat[i][j] = Math.min(mat[i][j], level_count);
+
+                visited.add(getValue(i, j));
+                /* i could understand why visited is global for zeros
+                but what about the other elemts like the 1 in the 1st example
+                from zeros, all should visit and calculte the distace right
+                */
+               
+                i--;
+                if(i >= 0 && !zeros.contains(getValue(i, j)) && !visited.contains(getValue(i, j))){
+                    queue.add(new int[]{i, j});
+                }
+                i++;
+
+                i++;
+                if(i < mat[0].length && !zeros.contains(getValue(i, j)) && !visited.contains(getValue(i, j))){
+                    queue.add(new int[]{i, j});
+                    
+                }
+                i--;
+
+                j--;
+                if(j >= 0 && !zeros.contains(getValue(i, j)) && !visited.contains(getValue(i, j))){
+                    queue.add(new int[]{i, j});
+                }
+                j++;
+
+                j++;
+                if(j < mat.length && !zeros.contains(getValue(i, j)) && !visited.contains(getValue(i, j))){
+                    queue.add(new int[]{i, j});
+                }
+                j--;
+            }
+            level_count++;
+        }
+    return mat;
+    }
+
+
+    Set<String> zeros;
+    Queue<int[]> zerosPlaces;
+
+    public int[][] updateMatrix(int[][] mat) {
+
+        zerosPlaces = new LinkedList<>();
+        zeros = new HashSet<>();
+
+        mat = getZerosPlaces(mat);
+
+        while(!zerosPlaces.isEmpty()){
+            int[] value = zerosPlaces.poll();
+            mat = doBfs(value, mat);
+        }
+
+        return mat;
+    }
+
+    public String getValue(int i, int j){
+        return Integer.toString(i) + Integer.toString(j);
+    }
+}
+
+------------------------------------------------------------------ resolved index issue in doBfs
+
+class Solution {
+
+    public int[][] getZerosPlaces(int[][] mat){
+
+        for(int i = 0; i <  mat.length; i++){
+            for(int j = 0; j < mat[0].length; j++){
+                if(mat[i][j] == 0){
+                    zerosPlaces.add(new int[]{i, j});
+                    zeros.add(getValue(i, j));
+                }
+                else{
+                    mat[i][j] = Integer.MAX_VALUE;
+                }
+            }
+        }
+        return mat;
+    }
+
+    Set<String> visited;
+    public int[][] doBfs(int[] arr, int[][] mat){
+
+        Queue<int[]> queue = new LinkedList<>();
+        int level_count = 0; //1's woun't change to zero, here were are taking only from zeros
+        visited = new HashSet<>();
+        
+        queue.add(arr);
+
+        while(!queue.isEmpty()){
+            
+            int no_of_elements_in_level = queue.size();
+            
+            for(int k = 0; k < no_of_elements_in_level; k++){
+                int[] address = queue.poll();
+
+                int i = address[0];
+                int j = address[1];
+                mat[i][j] = Math.min(mat[i][j], level_count);
+
+                visited.add(getValue(i, j));
+                /* i could understand why visited is global for zeros
+                but what about the other elemts like the 1 in the 1st example
+                from zeros, all should visit and calculte the distace right
+                */
+               
+                i--;
+                if(i >= 0 && !zeros.contains(getValue(i, j)) && !visited.contains(getValue(i, j))){
+                    queue.add(new int[]{i, j});
+                }
+                i++;
+
+                i++;
+                if(i < mat.length && !zeros.contains(getValue(i, j)) && !visited.contains(getValue(i, j))){
+                    queue.add(new int[]{i, j});
+                    
+                }
+                i--;
+
+                j--;
+                if(j >= 0 && !zeros.contains(getValue(i, j)) && !visited.contains(getValue(i, j))){
+                    queue.add(new int[]{i, j});
+                }
+                j++;
+
+                j++;
+                if(j < mat[0].length && !zeros.contains(getValue(i, j)) && !visited.contains(getValue(i, j))){
+                    queue.add(new int[]{i, j});
+                }
+                j--;
+            }
+            level_count++;
+        }
+    return mat;
+    }
+
+
+    Set<String> zeros;
+    Queue<int[]> zerosPlaces;
+
+    public int[][] updateMatrix(int[][] mat) {
+
+        zerosPlaces = new LinkedList<>();
+        zeros = new HashSet<>();
+
+        mat = getZerosPlaces(mat);
+
+        while(!zerosPlaces.isEmpty()){
+            int[] value = zerosPlaces.poll();
+            mat = doBfs(value, mat);
+        }
+
+        return mat;
+    }
+
+    public String getValue(int i, int j){
+        return Integer.toString(i) + Integer.toString(j);
+    }
+}
+
