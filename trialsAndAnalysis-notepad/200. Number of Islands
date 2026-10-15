@@ -1,0 +1,74 @@
+I asked gpt to give DFS, but it gave BFS
+
+class Solution { //just checked with 2 testcase, works fine
+
+    public String getValue(int i, int j){
+        return i + " " + j;
+    }
+
+    public Set<String> doBFS(int i1, int j1, Set<String> visited, char[][] grid){
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{i1, j1});
+
+        while(!queue.isEmpty()){
+            int[] arr = queue.poll();
+            int i = arr[0];
+            int j = arr[1];
+            visited.add(getValue(i, j));
+
+            
+            i--; //North
+            if(i >= 0 && grid[i][j] != '0' && !visited.contains(getValue(i, j))){
+                queue.add(new int[]{i, j});
+                visited.add(getValue(i, j));
+            }
+            i++;
+
+            i++; //South
+            if(i < grid.length && grid[i][j] != '0' &&  !visited.contains(getValue(i, j))){
+                queue.add(new int[]{i, j});
+                visited.add(getValue(i, j));
+            }
+            i--;
+
+            j--; //West
+            if(j >= 0 &&  grid[i][j] != '0' && !visited.contains(getValue(i, j))){
+                queue.add(new int[]{i, j});
+                visited.add(getValue(i, j));
+            }
+            j++;
+
+            j++; //Ease
+            if(j < grid[0].length &&  grid[i][j] != '0' && !visited.contains(getValue(i, j))){
+                queue.add(new int[]{i, j});
+                visited.add(getValue(i, j));
+            }
+            j--;
+        }
+
+        return visited;
+    }
+
+    public int numIslands(char[][] grid) {
+        Set<String> visited = new HashSet<>();
+        int row = grid.length;
+        int column = grid[0].length;
+        int count = 0;
+
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < column; j++){
+                if(!visited.contains(getValue(i,j)) && grid[i][j] == '1'){
+                    count++;
+                    visited = doBFS(i, j, visited, grid);
+                }
+            }
+        }
+
+        return count++;
+    }
+}
+
+
+
+
+-----------------------------------------------------------------------

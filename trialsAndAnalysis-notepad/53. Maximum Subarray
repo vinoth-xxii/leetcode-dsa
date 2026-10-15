@@ -178,4 +178,41 @@ class Solution {
     }
 }
 
-------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------ //after a very long time
+/* 1st thing is i dont have to return the subarray, i just want to return the maxxxxxx
+	so, thing about like this, consider the 1st element of an array is the maxxxx or current maxxx!
+	add next element to it, does it contribute to desired result? if yes consider it in the subarray,
+	if not move to the next possible subarray. Again repeate it. 
+	by contribute i mean the sum of subarray should atleast be 1 or maintained at 1.
+	
+*/
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+        //int max = Integer.MIN_VALUE;
+        int max = nums[0];
+        int sum = 0;
+
+        /* previously you weere discussing about overall sum right?
+        for the statement "is overall less than zero, then we drop it
+        what if all the numbers in the array are negative? 
+        is that's case image it adding -ve's will make the sum smaller
+        but having them individually will hold greate value. So sum <= 0 rule will also apply even if all the numbers are negative" 
+        */
+
+        for(int i = 0; i < nums.length; i++){
+            sum+=nums[i] //1st we will calculate the sum
+            if(sum > 0){ // even though you have made the 1st element the max it still missed consequent elements when the integer is negative.
+                max = Integer.MAX(sum, max); //in first iteration max is still 0
+            }
+            else{
+                sum = 0; //if you worry about comparing sum = 0
+                /* if you worry about comparing sum = 0 with max, don't be
+                sum+=num[i] will take current value or one elment subarray so to say
+                */
+            }
+        }
+
+
+    }
+}
