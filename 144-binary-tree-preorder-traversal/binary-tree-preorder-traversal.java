@@ -14,42 +14,23 @@
  * }
  */
 class Solution {
+
+    public List<Integer> helper(TreeNode node, List<Integer> list){
+        if(node == null){
+            return list;
+        }
+        
+        list.add(node.val);
+        helper(node.left, list);
+        helper(node.right, list);
+
+        return list;
+    }
+
     public List<Integer> preorderTraversal(TreeNode root) {
-        /* traverse through left subtree and then move to right subtree*/
+        //i somehow need to return list
         List<Integer> result = new ArrayList<>();
-        Stack<TreeNode> stack = new Stack<>();
-        //use stack only for maintain track/path not for print values
-        if(root == null){
-            return result;
-        }
-
-        result.add(root.val);
-        TreeNode current = root;
-        stack.push(current);
-        //above is just preparation
-
-        while(!stack.isEmpty()){
-            if(current.left != null){
-                current = current.left;
-                result.add(current.val);
-                stack.push(current);
-                //it's like we are pushing the left subtree itself
-            }
-            else{
-                while(!stack.isEmpty()){
-                    TreeNode node = stack.pop();
-                    if(node.right != null){
-                        current = node.right;
-                        result.add(current.val);
-                        stack.push(current);
-                        break;
-                    }
-                    // else{
-                    //     current = stack.pop();
-                    // }
-                }
-            }
-        }
+        result = helper(root, result);
         return result;
     }
 }
