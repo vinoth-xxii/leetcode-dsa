@@ -1,0 +1,274 @@
+/* I thought suddenly, what if i keep returning boolean on the recursive stack?
+   since they mention in the question root to leaf, "the leaf" carry the sums to the
+   base case (terminating condition) and checks and return boolean result.
+   
+    If i go till 7 (a leaf) then check with 2 (a path for another leaf), then going back, would i have to modify sum?  Wait a sec...
+
+    You know that at level in the path we have different versions/values of sum, which we can't change directly, and in this case we don't have to. So no need to subtract 7, when we go back to 11 and to 2.
+
+    To put it technical term, each recursive stack has it's own sum. We don't have to subtract anything to traverback for explorting other paths.
+
+*/
+
+class Solution {
+    public boolean verifyPathSum(TreeNode node, int targetSum, int sum){
+        if(node == null){
+            if(sum == targetSum){
+                return true;
+                break;					//error : break statement outside switch or loop 
+            }
+            return false;
+        }
+
+        sum+=node.val;
+        verifyPathSum(node.left, targetSum, sum);
+        verifyPathSum(node.right, targetSum, sum);
+
+        return false;
+
+    }
+
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        return verifyPathSum(root, targetSum, 0);
+    }
+}
+
+----------------------------------------------------------------------- (2 test cases passed)
+
+/* I thought suddenly, what if i keep returning boolean on the recursive stack?
+   since they mention in the question root to leaf, "the leaf" carry the sums to the
+   base case (terminating condition) and checks and return boolean result.
+   
+    If i go till 7 (a leaf) then check with 2 (a path for another leaf), then going back, would i have to modify sum?  Wait a sec...
+
+    You know that at level in the path we have different versions/values of sum, which we can't change directly, and in this case we don't have to. So no need to subtract 7, when we go back to 11 and to 2.
+
+    To put it technical term, each recursive stack has it's own sum. We don't have to subtract anything to traverback for explorting other paths.
+
+*/
+
+class Solution {
+    public boolean verifyPathSum(TreeNode node, int targetSum, int sum){
+        boolean verified = false;
+
+        if(node == null){
+            if(sum == targetSum) {
+                verified = true;
+                return verified;
+            }
+            return verified;
+        }
+
+        sum+=node.val;
+        if(verified) return verified;
+        verified = verifyPathSum(node.left, targetSum, sum);
+        if(verified) return verified;
+        verified = verifyPathSum(node.right, targetSum, sum);
+
+        return verified;
+
+    }
+
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        return verifyPathSum(root, targetSum, 0);
+    }
+}
+
+
+-------------------------------------------------------------------- (106 out of 118 testcases passed)
+
+/* I thought suddenly, what if i keep returning boolean on the recursive stack?
+   since they mention in the question root to leaf, "the leaf" carry the sums to the
+   base case (terminating condition) and checks and return boolean result.
+   
+    If i go till 7 (a leaf) then check with 2 (a path for another leaf), then going back, would i have to modify sum?  Wait a sec...
+
+    You know that at level in the path we have different versions/values of sum, which we can't change directly, and in this case we don't have to. So no need to subtract 7, when we go back to 11 and to 2.
+
+    To put it technical term, each recursive stack has it's own sum. We don't have to subtract anything to traverback for explorting other paths.
+
+*/
+
+/* issue found for this test case : [1,2] and the targetsum is 1;
+	1
+  /
+ 2
+ 
+you thought it would till only '2' but what about below)? only have '1' shouldn't be consider as root to leaf path. It's only root.
+	1
+  /   \
+ 2    null
+
+*/
+
+class Solution {
+    public boolean verifyPathSum(TreeNode node, int targetSum, int sum){
+        boolean verified = false;
+
+        if(node == null){
+            if(sum == targetSum) {
+                verified = true;
+                return verified;
+            }
+            return verified;
+        }
+
+        sum+=node.val;
+        if(verified) return verified;
+        verified = verifyPathSum(node.left, targetSum, sum);
+        if(verified) return verified;
+        verified = verifyPathSum(node.right, targetSum, sum);
+
+        return verified;
+
+    }
+
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if(root == null) return false;
+        return verifyPathSum(root, targetSum, 0);
+    }
+}
+
+------------------------------------------------------------------------------
+
+/* I thought suddenly, what if i keep returning boolean on the recursive stack?
+   since they mention in the question root to leaf, "the leaf" carry the sums to the
+   base case (terminating condition) and checks and return boolean result.
+   
+    If i go till 7 (a leaf) then check with 2 (a path for another leaf), then going back, would i have to modify sum?  Wait a sec...
+
+    You know that at level in the path we have different versions/values of sum, which we can't change directly, and in this case we don't have to. So no need to subtract 7, when we go back to 11 and to 2.
+
+    To put it technical term, each recursive stack has it's own sum. We don't have to subtract anything to traverback for explorting other paths.
+
+*/
+
+
+/* issue found for the test case : [1,2] and the targetsum is 1;
+	1
+  /
+ 2
+ 
+you thought it would till only '2' but what about below)? only have '1' shouldn't be consider as root to leaf path. It's only root. HERE 1 is not a leaf.
+
+	1
+  /   \
+ 2    null
+
+BUT THEN, with test case : [1] and target is 1, it expects 'true'
+HERE 1 is a leaf
+
+ 	1
+  /   \
+null   null
+
+*/
+
+/* a note from dicusstion : 
+Chirayu_3823
+Aug 24, 2025
+"return true if the tree has a root-to-leaf path", "A leaf is a node with no children."
+*/
+
+/* I could think of forward thinking, i.e like node.left == null like that 
+and if both node.left and node.right is null then it is a leafnode*/
+
+class Solution {
+    public boolean verifyPathSum(TreeNode node, int targetSum, int sum){
+        boolean verified = false;
+
+        if(node.left == null && node.right == null){
+            if(sum == targetSum) {
+                verified = true;
+                return verified;
+            }
+            return verified;
+        }
+
+        sum+=node.val;
+        if(verified) return verified;
+        if(node.left) verified = verifyPathSum(node.left, targetSum, sum);
+        if(verified) return verified;
+        verified = verifyPathSum(node.right, targetSum, sum);
+
+        return verified;
+
+    }
+
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if(root == null) return false;
+
+        return verifyPathSum(root, targetSum, 0);
+    }
+}
+
+------------------------------------------------------------------------------
+
+
+/* I thought suddenly, what if i keep returning boolean on the recursive stack?
+   since they mention in the question root to leaf, "the leaf" carry the sums to the
+   base case (terminating condition) and checks and return boolean result.
+   
+    If i go till 7 (a leaf) then check with 2 (a path for another leaf), then going back, would i have to modify sum?  Wait a sec...
+
+    You know that at level in the path we have different versions/values of sum, which we can't change directly, and in this case we don't have to. So no need to subtract 7, when we go back to 11 and to 2.
+
+    To put it technical term, each recursive stack has it's own sum. We don't have to subtract anything to traverback for explorting other paths.
+
+*/
+
+
+/* issue found for the test case : [1,2] and the targetsum is 1;
+	1
+  /
+ 2
+ 
+you thought it would till only '2' but what about below)? only have '1' shouldn't be consider as root to leaf path. It's only root. HERE 1 is not a leaf.
+
+	1
+  /   \
+ 2    null
+
+BUT THEN, with test case : [1] and target is 1, it expects 'true'
+HERE 1 is a leaf
+
+ 	1
+  /   \
+null   null
+
+*/
+
+/* a note from dicusstion : 
+Chirayu_3823
+Aug 24, 2025
+"return true if the tree has a root-to-leaf path", "A leaf is a node with no children."
+*/
+
+/* I could think of forward thinking, i.e like node.left == null like that 
+and if both node.left and node.right is null then it is a leafnode*/
+
+class Solution {
+    public boolean helper(TreeNode node, int targetSum, int sum){
+        boolean matched = false;
+        
+        if(node.left == null && node.right == null){ //if the node is leaf
+            sum+=node.val;
+            if(targetSum == sum) return true;
+        }
+        
+        sum+=node.val;
+        if(node.left != null) {  //if it's left then we have some path to explore
+            matched = helper(node.left, targetSum, sum);
+        }
+        if(node.right != null && !matched){
+            matched = helper(node.right, targetSum, sum);
+        }
+
+        return matched;
+    }
+
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if(root == null) return false;
+        return helper(root, targetSum, 0);
+    }
+}

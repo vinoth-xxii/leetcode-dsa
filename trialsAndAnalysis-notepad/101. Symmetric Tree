@@ -1,0 +1,89 @@
+/* i will invert the left part of tree alone and store them in list,
+and then i will traverse right part of subtree and store them in list.
+and then check if the array is equal
+*/
+
+class Solution {
+
+    //I am follwing pre-order traversal, but it's modified traversal
+    public List<Integer> genArrInvert(TreeNode node, List<Integer> list){
+        if(node == null){
+            return list;
+        }
+
+        list.add(node.val);
+        genArrInvert(node.right, list);
+        genArrInvert(node.left, list);
+
+        return list;
+    }
+
+    public List<Integer> genArr(TreeNode node, List<Integer> list){
+        if(node == null){
+            return list;
+        }
+
+        list.add(node.val);
+        genArr(node.left, list);
+        genArr(node.right, list);
+
+        return list;
+    }
+
+    public boolean isSymmetric(TreeNode root) {
+        List<Integer> leftArr = new ArrayList<>();
+        List<Integer> rightArr = new ArrayList<>();
+
+        leftArr = genArrInvert(root.left, leftArr);
+        rightArr = genArr(root.right, rightArr);
+
+        if(leftArr.equals(rightArr)) return true;
+
+        return false;
+    }
+}
+
+
+--------------------------------------------------------------------------------------
+/* Made few change in the return (-1 with list), passed add test cases*/
+class Solution {
+
+    //I am follwing pre-order traversal, but it's modified traversal
+    public List<Integer> genArrInvert(TreeNode node, List<Integer> list){
+        if(node == null){
+            list.add(-1);
+            return list;
+        }
+
+        list.add(node.val);
+        genArrInvert(node.right, list);
+        genArrInvert(node.left, list);
+
+        return list;
+    }
+
+    public List<Integer> genArr(TreeNode node, List<Integer> list){
+        if(node == null){
+            list.add(-1);
+            return list;
+        }
+
+        list.add(node.val);
+        genArr(node.left, list);
+        genArr(node.right, list);
+
+        return list;
+    }
+
+    public boolean isSymmetric(TreeNode root) {
+        List<Integer> leftArr = new ArrayList<>();
+        List<Integer> rightArr = new ArrayList<>();
+
+        leftArr = genArrInvert(root.left, leftArr);
+        rightArr = genArr(root.right, rightArr);
+
+        if(leftArr.equals(rightArr)) return true;
+
+        return false;
+    }
+}
