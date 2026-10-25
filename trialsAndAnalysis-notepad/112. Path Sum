@@ -202,7 +202,7 @@ class Solution {
     }
 }
 
-------------------------------------------------------------------------------
+------------------------------------------------------------------------------ 100% passed and good
 
 
 /* I thought suddenly, what if i keep returning boolean on the recursive stack?
@@ -269,6 +269,37 @@ class Solution {
 
     public boolean hasPathSum(TreeNode root, int targetSum) {
         if(root == null) return false;
+        return helper(root, targetSum, 0);
+    }
+}
+
+------------------------------------------------------------------ minor improvements
+
+class Solution {
+    public boolean helper(TreeNode node, int targetSum, int sum) {
+
+        sum += node.val;
+
+        // If current node is a leaf node
+        if (node.left == null && node.right == null) {
+            return targetSum == sum;
+        }
+
+        boolean matched = false;
+
+        if (node.left != null) {
+            matched = helper(node.left, targetSum, sum);
+        }
+
+        if (node.right != null && !matched) {
+            matched = helper(node.right, targetSum, sum);
+        }
+
+        return matched;
+    }
+
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null) return false;
         return helper(root, targetSum, 0);
     }
 }
